@@ -1,4 +1,4 @@
-package com.example.security.User;
+package com.example.security.user;
 
 import java.time.LocalDateTime;
 
@@ -17,6 +17,10 @@ import lombok.Data;
 @Entity
 @Table(name="User")
 public class User {
+
+    public enum userRole {
+        CLIENT, ADMIN
+    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +35,8 @@ public class User {
     @Column private String userMobile;
 
     @Column private String userEmail;
+
+    @Column private String userRole;
 
     @Column private LocalDateTime userJoinDate;
 

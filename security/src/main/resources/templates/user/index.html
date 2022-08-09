@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user Index</title>
+</head>
+<body>
+    <main>
+    <h3 th:if="${userAccount} != null">Welcome [[${userAccount}]]</h3>
+    <h3 th:if="${userAccount} == null">Welcome GUEST</h4>
+    </main>
+</body>
+</html>
