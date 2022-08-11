@@ -1,4 +1,4 @@
-package com.example.security.user;
+package com.example.security.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,12 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.security.security.CustomUserDetails;
+import com.example.security.user.User;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/admin")
+public class AdminController {
 
-    @Autowired UserService userService;
+    @Autowired AdminService userService;
     
     @GetMapping("/test01")
     @ResponseBody

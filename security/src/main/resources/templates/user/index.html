@@ -6,7 +6,8 @@
 <body>
     <main>
     <h3 th:if="${userAccount} != null">Welcome [[${userAccount}]]</h3>
-    <h3 th:if="${userAccount} == null">Welcome GUEST</h4>
+    <h3 th:unless="${userAccount} != null">Welcome GUEST</h3>
+    <a href="/logout">로그아웃</a>
     </main>
 </body>
 </html>
