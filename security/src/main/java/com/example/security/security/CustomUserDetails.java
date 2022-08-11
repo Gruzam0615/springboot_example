@@ -23,7 +23,7 @@ public class CustomUserDetails implements UserDetails {
         List<SimpleGrantedAuthority> auth = new ArrayList<>();
         String userRole = user.getUserRole();
         auth.add(new SimpleGrantedAuthority(userRole));
-        return null;
+        return auth;
     }
 
     @Override

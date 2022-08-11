@@ -20,8 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService{
         if(user == null) {
             throw new UsernameNotFoundException(username);
         }
-        // TODO Auto-generated method stub
         return new CustomUserDetails(user);
-    }
-    
+    }    
 }

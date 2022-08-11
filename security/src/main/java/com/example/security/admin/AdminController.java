@@ -14,6 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.security.security.CustomUserDetails;
 import com.example.security.user.User;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -26,25 +29,25 @@ public class AdminController {
         return "/test01";
     }
 
-    @GetMapping("/")
+    @GetMapping({"", "/"})
     public String userIndex() {
-        return "user/index";
+        return "admin/index";
     }
 
     @GetMapping("/signUp")
     public String signUpForm() {
-        return "user/sign/signUp";
+        return "admin/sign/signUp";
     }
 
     @PostMapping("/signUpProcess")
     public String signUpProcess(User param) {
         userService.save(param);
-        return "redirect:/user/signIn";
+        return "redirect:/admin/signIn";
     }
 
     @GetMapping("/signIn")
     public String signInForm() {
-        return "user/sign/signIn";
+        return "admin/sign/signIn";
     }
 
     @PostMapping("/signInSuccess")
@@ -52,8 +55,16 @@ public class AdminController {
         @AuthenticationPrincipal CustomUserDetails user,
         RedirectAttributes redirectAttributes
     ) {
+        // if(user.getAuthorities().equals("ADMIN")) {
+        //     redirectAttributes.addFlashAttribute("userAccount", user.getUsername());
+        //     return "redirect:/admin/";
+        // }
+        // else {
+        //     return "redirect:/admin/signIn";
+        // }
+        log.info(user.getAuthorities().toString());
         redirectAttributes.addFlashAttribute("userAccount", user.getUsername());
-        return "redirect:/user/";
+        return "redirect:/admin/";
     }
 
     @PostMapping("/signInFailure")
@@ -62,7 +73,7 @@ public class AdminController {
     ) {
         ModelAndView mv = new ModelAndView();
 
-        mv.setViewName("user/index");
+        mv.setViewName("admin/index");
 
         return mv;
     }
