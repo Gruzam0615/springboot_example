@@ -11,8 +11,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 
 
 @Configuration
-@Order(2)
-public class AdumSecurityConfig {
+@Order(1)
+public class AdminSecurityConfig {
     
     @Bean
     public SecurityFilterChain adminSecurityFilterChain(HttpSecurity http) throws Exception {

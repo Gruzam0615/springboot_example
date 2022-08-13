@@ -56,14 +56,10 @@ public class UserController {
     }
 
     @PostMapping("/signInFailure")
-    public ModelAndView signInFailure(
+    public String signInFailure(
 
     ) {
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("user/index");
-
-        return mv;
+        return "redirect:user/";
     }
 
 }

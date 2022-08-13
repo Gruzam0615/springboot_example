@@ -14,7 +14,7 @@ import org.hibernate.annotations.GeneratorType;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name="User")
 @Table(name="User")
 public class User {
 

@@ -68,14 +68,10 @@ public class AdminController {
     }
 
     @PostMapping("/signInFailure")
-    public ModelAndView signInFailure(
+    public String signInFailure(
 
     ) {
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("admin/index");
-
-        return mv;
+        return "redirect:/admin";
     }
 
 }
