@@ -22,6 +22,11 @@ public class GroupMemberController {
         return "/groupMember/test01";
     }
     
+    /**
+     * OneToOne 관계 예제
+     * @param userIdx
+     * @return
+     */
     @GetMapping("/getGroupMember")
     @ResponseBody
     public String getGroupMember(
