@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 public interface GroupMemberRepository extends JpaRepository<GroupMemberEntity, Long> {
 
     @Query(
-        value="SELECT GroupMemberEntity.groupMemberIdx, UserEntity.userName from GroupMemberEntity " +
-            "JOIN UserEntity " + 
-            "WHERE GroupMemberEntity.userIdx=?1",
+        value="SELECT GroupMemberEntity.groupMemberIdx, UserEntity.userName FROM GroupMemberEntity " +
+            "INNER JOIN UserEntity " + 
+            "WHERE UserEntity.userIdx=?1",
         nativeQuery = true
     )
     GetByUserIdx getByUserIdx(Long userIdx);

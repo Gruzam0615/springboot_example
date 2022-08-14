@@ -33,7 +33,8 @@ public class GroupMemberController {
             return "result is Null";
         }
         else {
-            return result.toString();
+            log.info("result: {}", result.toString());
+            return result.getUserName();
         }
     }
 

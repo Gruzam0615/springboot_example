@@ -32,12 +32,6 @@ public class GroupMemberEntity {
     @Column private Long userIdx;
     @Column private LocalDateTime joinDate;
 
-    // @OneToOne
-    // @JoinTable(
-    //     name="UserEntity",
-    //     joinColumns = @JoinColumn(name="userIdx"),
-    //     inverseJoinColumns = @JoinColumn(name="userIdx")
-    // )
-    // private UserEntity userEntity;
-
+    @OneToOne(mappedBy="groupMemberEntity")
+    private UserEntity userEntity;
 }
