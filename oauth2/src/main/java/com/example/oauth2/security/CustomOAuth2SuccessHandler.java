@@ -30,7 +30,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException {
         
-        log.info("Principal에서 꺼낸 OAuth2User = {}", authentication.toString());
+        // log.info("Principal에서 꺼낸 OAuth2User = {}", authentication.toString());
         // 최초 로그인이라면 회원가입 처리를 한다.
         // String targetUrl;
         // log.info("토큰 발행 시작");
