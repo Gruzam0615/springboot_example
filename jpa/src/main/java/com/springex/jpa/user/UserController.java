@@ -12,8 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.querydsl.core.Query;
+import com.querydsl.core.QueryFactory;
+import com.springex.jpa.group.GroupEntity;
 import com.springex.jpa.util.random.RandomGenAccount;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
     @Autowired private UserService userService;
-    
+
     @GetMapping("/signUp")
     public String signUp() {
         return "user/signUp";
@@ -39,6 +43,16 @@ public class UserController {
         // log.info("registerUser {}", user.toString());
         userService.save(user);
         response.sendRedirect("/");
+    }
+
+    @GetMapping("/selectUserInfoByUserAccount")
+    @ResponseBody
+    public String selectUserInfoByUserAccount(
+        @RequestParam("userAccount") String userAccount
+    ) {
+        // UserEntity userInfo = userService.selectUserInfoByUserAccount(userAccount);
+        // return userInfo.toString();
+        return null;
     }
 
     @GetMapping("/randomSignUpUser")

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Service
 public class UserService implements UserRepository {
@@ -39,6 +43,10 @@ public class UserService implements UserRepository {
         // TODO Auto-generated method stub
         return null;
     }
+
+    // public UserEntity selectUserInfoByUserAccount(String userAccount) {
+    //     // return 
+    // }
 
     @Override
     public <S extends UserEntity> List<S> saveAll(Iterable<S> entities) {
