@@ -1,4 +1,4 @@
-package com.springex.jpa.groupmember;
+package com.springex.jpa.groupmember.entity;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.springex.jpa.user.UserEntity;
+import com.springex.jpa.user.entity.UserEntity;
 
 import lombok.Data;
 

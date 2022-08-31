@@ -1,7 +1,8 @@
-package com.springex.jpa.user;
+package com.springex.jpa.user.controller;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,14 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.querydsl.core.Query;
 import com.querydsl.core.QueryFactory;
 import com.springex.jpa.group.GroupEntity;
+import com.springex.jpa.user.entity.UserEntity;
+import com.springex.jpa.user.service.UserService;
 import com.springex.jpa.util.random.RandomGenAccount;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +42,17 @@ public class UserController {
     }    
 
     @PostMapping("/signUpUser")
-    @ResponseBody
     public void signUpUser(
         UserEntity user,
+        @RequestPart("userProfile") MultipartFile file1,
+        @RequestPart("userFiles") List<MultipartFile> file2,
         HttpServletRequest request, HttpServletResponse response
     ) throws IOException {
-        // log.info("registerUser {}", user.toString());
-        userService.save(user);
+        log.info("registerUser: {}", user.toString());
+        log.info("file1: {}", file1.getOriginalFilename());
+        log.info("file2: {}", file2.toString());
+        
+        // userService.save(user);
         response.sendRedirect("/");
     }
 

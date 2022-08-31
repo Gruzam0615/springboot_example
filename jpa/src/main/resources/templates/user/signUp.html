@@ -6,7 +6,7 @@
 <body>
     <main>
         <h1>회원가입</h1>
-        <form method="POST" th:action="@{/user/signUpUser}">
+        <form method="POST" th:action="@{/user/signUpUser}" enctype="multipart/form-data">
             <label for="userAccount">계정</label>
             <input type="text" name="userAccount" id="userAccount" placeholder="계정"/>
             <br/>
@@ -21,6 +21,12 @@
                 <option value="USER">user</option>
                 <option value="ADMIN">admin</option>
             </select>
+            <br/>
+            <label for="userProfile">프로필 이미지</label>
+            <input type="file" id="userProfile" name="userProfile" />
+            <br/>
+            <label for="userProfile">다중첨부</label>
+            <input type="file" id="userFiles" name="userFiles" multiple/>
             <br/>
             <input type="submit" value="등록"/>
         </form>

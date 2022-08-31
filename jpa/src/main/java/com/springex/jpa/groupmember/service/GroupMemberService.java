@@ -1,4 +1,4 @@
-package com.springex.jpa.groupmember;
+package com.springex.jpa.groupmember.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
+
+import com.springex.jpa.groupmember.entity.GetByUserIdx;
+import com.springex.jpa.groupmember.entity.GroupMemberEntity;
+import com.springex.jpa.groupmember.repository.GroupMemberRepository;
 
 import lombok.extern.slf4j.Slf4j;
 

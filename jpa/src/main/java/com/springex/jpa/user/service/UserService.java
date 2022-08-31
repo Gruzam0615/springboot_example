@@ -1,4 +1,4 @@
-package com.springex.jpa.user;
+package com.springex.jpa.user.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +15,8 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.springex.jpa.user.entity.UserEntity;
+import com.springex.jpa.user.repository.UserRepository;
 
 @Service
 public class UserService implements UserRepository {

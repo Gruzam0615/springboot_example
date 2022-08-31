@@ -1,4 +1,4 @@
-package com.springex.jpa.groupmember;
+package com.springex.jpa.groupmember.entity;
 
 import java.time.LocalDateTime;
 

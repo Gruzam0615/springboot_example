@@ -1,9 +1,5 @@
-package com.springex.jpa.user;
+package com.springex.jpa.user.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.springex.jpa.groupmember.GroupMemberEntity;
+import com.springex.jpa.groupmember.entity.GroupMemberEntity;
 
 import lombok.Data;
 
@@ -30,6 +26,7 @@ public class UserEntity {
     @Column private String userPass;
     @Column private String userName;
     @Column private String userRole;
+    @Column private String usersProfile;
 
     @OneToOne
     @JoinColumn(name="userIdx")
