@@ -24,7 +24,7 @@ public class UserService implements UserRepository {
     @Autowired private UserRepository userRepository;
 
     @Override
-    public <S extends UserEntity> S save(S entity) {
+    public <S extends UserEntity> S save(S entity) {        
         return userRepository.save(entity);
     }
 
