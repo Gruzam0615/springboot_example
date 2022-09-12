@@ -14,7 +14,23 @@
         <input type="password" id="userPass" name="userPass" value="" />
         <br/>
         <input type="submit" value="로그인"/>
+        <!-- <input type="button" id="signInBtn" value="로그인"/> -->
     </form>
     </main>
 </body>
+<!-- <script>
+const signInBtn = document.querySelector("#signInBtn");
+signInBtn.addEventListener("click", () => {
+    const userAccount = document.querySelector("#userAccount").value;
+    const userPass = document.querySelector("#userPass").value;
+    const url = "/user/signInProcess"
+    let formData = new FormData();
+        formData.append("userAccount", userAccount);
+        formData.append("userPass", userPass);
+    const option = {
+        method: "POST",
+        body: formData
+    }
+})
+</script> -->
 </html>
