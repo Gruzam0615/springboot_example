@@ -22,12 +22,6 @@ public class ClubService implements ClubRepository {
     @Autowired private ClubRepository clubRepository;
 
     @Override
-    public <S extends ClubEntity> S save(S entity) {
-        entity.setClubRegistrationDate(LocalDateTime.now());
-        return clubRepository.save(entity);
-    }
-
-    @Override
     public List<ClubEntity> findAll() {
         // TODO Auto-generated method stub
         return null;
@@ -119,6 +113,12 @@ public class ClubService implements ClubRepository {
 
     @Override
     public Page<ClubEntity> findAll(Pageable pageable) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public <S extends ClubEntity> S save(S entity) {
         // TODO Auto-generated method stub
         return null;
     }

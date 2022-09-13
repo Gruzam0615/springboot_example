@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -21,7 +22,7 @@ public class ClubCategoryEntity {
     private Long clubIdx;
     private String clubCategory;
 
-    // @ManyToOne
+    // @OneToMany(targetEntity = ClubEntity.class)
     // @JoinColumn(name="clubIdx", nullable=false)
     // private ClubEntity clubEntity;
 
