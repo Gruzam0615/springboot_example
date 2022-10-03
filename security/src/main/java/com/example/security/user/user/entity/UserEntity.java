@@ -1,4 +1,4 @@
-package com.example.security.user;
+package com.example.security.user.user.entity;
 
 import java.time.LocalDateTime;
 
@@ -14,9 +14,9 @@ import org.hibernate.annotations.GeneratorType;
 import lombok.Data;
 
 @Data
-@Entity(name="User")
-@Table(name="User")
-public class User {
+@Entity(name="UserEntity")
+@Table(name="UserEntity")
+public class UserEntity {
 
     public enum userRole {
         CLIENT, ADMIN

@@ -1,19 +1,19 @@
-package com.example.security.admin;
+package com.example.security.admin.admin.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.security.user.User;
+import com.example.security.user.user.entity.UserEntity;
 
 @Repository
-public interface AdminRepository extends JpaRepository<User, Long> {
+public interface AdminRepository extends JpaRepository<UserEntity, Long> {
 
     @Query(
         value="SELECT * FROM User " +
         "WHERE userAccount = ?1",
         nativeQuery=true
     )
-    User findByUserAccount(String userAccount);
+    UserEntity findByUserAccount(String userAccount);
     
 }
