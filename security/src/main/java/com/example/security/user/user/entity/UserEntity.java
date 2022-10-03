@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GeneratorType;
 
 import lombok.Data;
 
@@ -26,25 +25,25 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userIdx;
 
-    @Column private String userAccount;
+    @Column(nullable = false, length = 20) private String userAccount;
 
-    @Column private String userPass;
+    @Column(nullable = false, length = 20) private String userPass;
 
-    @Column private String userName;
+    @Column(nullable = false, length = 30) private String userName;
 
-    @Column private String userMobile;
+    @Column(nullable = false, length = 13) private String userMobile;
 
-    @Column private String userEmail;
+    @Column(nullable = false, length = 40) private String userEmail;
 
-    @Column private String userRole;
+    @Column(nullable = false, length = 20) private String userRole;
 
     @Column private LocalDateTime userJoinDate;
 
-    @Column private String provider;
+    @Column(columnDefinition = "varchar(300) default 'local'") private String provider;
 
-    @Column private String providerId;
+    @Column(nullable = true, length = 300) private String providerId;
 
-    @Column private String profileImage;
+    @Column(nullable = true, length = 300) private String profileImage;
     
 
 }
