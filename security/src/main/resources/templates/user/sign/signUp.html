@@ -13,8 +13,28 @@
         <label for="userPass">패스워드</label>
         <input type="password" id="userPass" name="userPass" value="" />
         <br/>
-        <input type="submit" value="회원가입"/>
+        <input type="file" id="profileImage" name="profileImage" />
+        <br/>
+        <input type="button" id="signUpSubmit" value="회원가입"/>
     </form>
     </main>
 </body>
+<script>
+const signUpSubmit = document.querySelector("#signUpSubmit");
+signUpSubmit.addEventListener("click", () => {
+    const userAccount = document.querySelector("#userAccount");
+    const userPass = document.querySelector("#userPass");
+    const profileImage = document.querySelector("#profileImage");
+
+    let formData = new FormData();
+    formData.append("userAccount", userAccount.value);
+    formData.append("userPass", userPass.value);
+    formData.append("profileImage", profileImage.files[0]);
+    fetch("/user/signUpProcess", {
+        method: "POST",
+        body: formData
+    })
+
+});
+</script>
 </html>

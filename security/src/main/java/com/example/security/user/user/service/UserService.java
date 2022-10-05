@@ -1,5 +1,6 @@
 package com.example.security.user.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -23,6 +24,15 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService implements UserRepository{
 
     @Autowired private UserRepository userRepository;
+
+    @Override
+    public <S extends UserEntity> S save(S entity) {
+        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
+        entity.setUserPass(encodedPass);
+        entity.setUserJoinDate(LocalDateTime.now());
+        log.info("[save] {}", entity.toString());
+        return userRepository.save(entity);
+    }
 
     @Override
     public UserEntity findByUserAccount(String userAccount) {
@@ -124,13 +134,6 @@ public class UserService implements UserRepository{
     public Page<UserEntity> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public <S extends UserEntity> S save(S entity) {
-        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
-        entity.setUserPass(encodedPass);
-        return userRepository.save(entity);
     }
 
     @Override

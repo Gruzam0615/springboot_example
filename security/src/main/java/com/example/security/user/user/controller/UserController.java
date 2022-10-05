@@ -11,8 +11,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.security.security.CustomUserDetails;
 import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.user.entity.UserEntityParam;
 import com.example.security.user.user.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -36,9 +40,15 @@ public class UserController {
     }
 
     @PostMapping("/signUpProcess")
-    public String signUpProcess(UserEntity param) {
-        userService.save(param);
-        return "redirect:/user/signIn";
+    public String signUpProcess(UserEntityParam param) {
+        UserEntity entity = new UserEntity();
+        entity.setUserAccount(param.getUserAccount());
+        entity.setUserPass(param.getUserPass());
+        entity.setUserRole("USER");
+        entity.setProfileImage(param.getProfileImage().getOriginalFilename());
+        // log.info("[] :: {}", param.getProfileImage().getOriginalFilename());
+        userService.save(entity);
+        return "redirect:/user/signUp";
     }
 
     @GetMapping("/signIn")

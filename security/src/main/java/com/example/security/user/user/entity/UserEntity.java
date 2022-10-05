@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -27,13 +28,13 @@ public class UserEntity {
 
     @Column(nullable = false, length = 20) private String userAccount;
 
-    @Column(nullable = false, length = 20) private String userPass;
+    @Column(nullable = false, length = 255) private String userPass;
 
-    @Column(nullable = false, length = 30) private String userName;
+    // @Column(nullable = false, length = 30) private String userName;
 
-    @Column(nullable = false, length = 13) private String userMobile;
+    // @Column(nullable = false, length = 13) private String userMobile;
 
-    @Column(nullable = false, length = 40) private String userEmail;
+    // @Column(nullable = false, length = 40) private String userEmail;
 
     @Column(nullable = false, length = 20) private String userRole;
 
@@ -41,7 +42,7 @@ public class UserEntity {
 
     @Column(columnDefinition = "varchar(300) default 'local'") private String provider;
 
-    @Column(nullable = true, length = 300) private String providerId;
+    // @Column(nullable = true, length = 300) private String providerId;
 
     @Column(nullable = true, length = 300) private String profileImage;
     
