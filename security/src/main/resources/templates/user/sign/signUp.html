@@ -30,6 +30,12 @@ signUpSubmit.addEventListener("click", () => {
     formData.append("userAccount", userAccount.value);
     formData.append("userPass", userPass.value);
     formData.append("profileImage", profileImage.files[0]);
+    
+    // // List<String> 전송 예시
+    // let formData2 = new FormData();
+    // formData2.append("requestParamValue", sendValue);
+    // formData2.append("requestParamValue", sendValue2);
+    
     fetch("/user/signUpProcess", {
         method: "POST",
         body: formData
