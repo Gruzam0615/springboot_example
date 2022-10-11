@@ -29,11 +29,22 @@ signUpSubmit.addEventListener("click", () => {
     let formData = new FormData();
     formData.append("userAccount", userAccount.value);
     formData.append("userPass", userPass.value);
-    formData.append("profileImage", profileImage.files[0]);
+    formData.append("profileImageFile", profileImage.files[0]);
     fetch("/user/signUpProcess", {
         method: "POST",
         body: formData
     })
+        .then(response => response.text())        
+        .then(data => {
+            if(data == "true") {
+                alert("회원가입에 성공했습니다.");
+                window.location.href = "/user/sign/signIn"; 
+            }
+            else {
+                alert("회원가입에 실패했습니다.");
+                window.location.href = "/user/signUp"; 
+            }
+        })
 
 });
 </script>

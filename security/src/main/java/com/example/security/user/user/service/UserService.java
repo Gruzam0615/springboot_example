@@ -30,7 +30,6 @@ public class UserService implements UserRepository{
         String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
         entity.setUserPass(encodedPass);
         entity.setUserJoinDate(LocalDateTime.now());
-        log.info("[save] {}", entity.toString());
         return userRepository.save(entity);
     }
 
