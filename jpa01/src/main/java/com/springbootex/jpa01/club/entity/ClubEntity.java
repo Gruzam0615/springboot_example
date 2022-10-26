@@ -8,12 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name="Club")
+@Table(
+    name="Club"
+    // // column UNIQUE 설정 DDL 자동 생성시에 적용, JPA 실행에는 영향을 주지 않는다.
+    // uniqueConstraints = {
+    //     @UniqueConstraint(
+    //         name = "UNIQUE_COLUMN",
+    //         columnNames = { "clubName" }
+    //     )
+    // }
+)
 public class ClubEntity {
 
     @Id

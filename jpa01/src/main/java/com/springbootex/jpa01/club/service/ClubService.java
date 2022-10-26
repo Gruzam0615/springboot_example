@@ -21,6 +21,25 @@ public class ClubService implements ClubRepository {
     
     @Autowired private ClubRepository clubRepository;
 
+    /**
+     * club 목록 페이지를 보여주는 서비스
+     * @return
+     */
+    public String clubListView() {
+        return "club/clubList";
+    }
+
+    /**
+     * club 등록 페이지를 보여주는 서비스
+     * @return
+     */
+    public String clubInsertView() {
+        return "club/clubInsert";
+    }
+
+    /**
+     * club 등록을 수행하는 서비스
+     */
     @Override
     public <S extends ClubEntity> S save(S entity) {
         return clubRepository.save(entity);

@@ -10,6 +10,7 @@ import javax.persistence.Persistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,9 +26,31 @@ public class ClubController {
 
     @Autowired private ClubService clubService;
 
-    @GetMapping("/insertNewClub")
+    /**
+     * club 목록 페이지로 이동하는 컨트롤러
+     * @return
+     */
+    @GetMapping("/list")
+    public String clubListView() {
+        return clubService.clubListView();
+    }
+    
+    /**
+     * club 등록 페이지로 이동하는 컨트롤러
+     * @return
+     */
+    @GetMapping("/insert")
+    public String clubInsertView() {
+        return clubService.clubInsertView();
+    }
+
+    /**
+     * club을 등록하는 컨트롤러
+     * @return
+     */
+    @PostMapping("/insert")
     @ResponseBody
-    public String insertNewClub() {        
+    public String clubInsert() {
         ClubEntity club = new ClubEntity();
         club.setClubName("Test Club01");
         club.setClubCreateDate(LocalDateTime.now());
