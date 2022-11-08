@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationEn
 
 
 @Configuration
-@Order(1)
+// @Order(1)
 public class AdminSecurityConfig {
     
     @Bean

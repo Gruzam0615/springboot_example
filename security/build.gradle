@@ -27,6 +27,8 @@ dependencies {
 	
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.7.2'
 	implementation 'com.h2database:h2:2.1.214'
+	
+	implementation 'com.auth0:java-jwt:4.2.1'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -34,10 +36,7 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'	
-	
-
-
+	testImplementation 'org.springframework.security:spring-security-test'
 	
 }
 

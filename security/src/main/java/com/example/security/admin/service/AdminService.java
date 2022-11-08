@@ -1,6 +1,5 @@
-package com.example.security.user.user.service;
+package com.example.security.admin.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -14,24 +13,16 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.security.user.user.entity.UserEntity;
-import com.example.security.user.user.repository.UserRepository;
+import com.example.security.admin.repository.AdminRepository;
+import com.example.security.user.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class UserService implements UserRepository{
+public class AdminService implements AdminRepository{
 
-    @Autowired private UserRepository userRepository;
-
-    @Override
-    public <S extends UserEntity> S save(S entity) {
-        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
-        entity.setUserPass(encodedPass);
-        entity.setUserJoinDate(LocalDateTime.now());
-        return userRepository.save(entity);
-    }
+    @Autowired private AdminRepository userRepository;
 
     @Override
     public UserEntity findByUserAccount(String userAccount) {
@@ -133,6 +124,13 @@ public class UserService implements UserRepository{
     public Page<UserEntity> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public <S extends UserEntity> S save(S entity) {
+        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
+        entity.setUserPass(encodedPass);
+        return userRepository.save(entity);
     }
 
     @Override

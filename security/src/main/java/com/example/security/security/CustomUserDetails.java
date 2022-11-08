@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.entity.UserEntity;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -54,6 +54,14 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getUserIdx() {
+        return user.getUserIdx();
+    }
+
+    public String getSignInToken() {
+        return user.getSignInToken();
     }
 
 }

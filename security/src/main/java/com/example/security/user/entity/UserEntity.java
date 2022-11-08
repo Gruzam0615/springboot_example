@@ -1,4 +1,4 @@
-package com.example.security.user.user.entity;
+package com.example.security.user.entity;
 
 import java.time.LocalDateTime;
 
@@ -42,9 +42,11 @@ public class UserEntity {
 
     @Column(columnDefinition = "varchar(300) default 'local'") private String provider;
 
-    // @Column(nullable = true, length = 300) private String providerId;
+    @Column(nullable = true, length = 300) private String providerId;
 
     @Column(nullable = true, length = 300) private String profileImage;
+
+    @Column(nullable = true, length = 255) private String signInToken;
     
 
 }

@@ -1,5 +1,6 @@
-package com.example.security.admin.admin.service;
+package com.example.security.user.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -13,20 +14,32 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.security.admin.admin.repository.AdminRepository;
-import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.entity.UserEntity;
+import com.example.security.user.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AdminService implements AdminRepository{
+public class UserService implements UserRepository{
 
-    @Autowired private AdminRepository userRepository;
+    @Autowired private UserRepository userRepository;
 
     @Override
+    public <S extends UserEntity> S save(S entity) {
+        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
+        entity.setUserPass(encodedPass);        
+        entity.setUserRole("CLIENT");
+        entity.setUserJoinDate(LocalDateTime.now());
+
+        if(entity.getProvider() == null) {
+            entity.setProvider("local");
+        }
+
+        return userRepository.save(entity);
+    }
+
     public UserEntity findByUserAccount(String userAccount) {
-        log.info("findByUserAccount param: {}", userAccount);
         return userRepository.findByUserAccount(userAccount);
     }
 
@@ -124,13 +137,6 @@ public class AdminService implements AdminRepository{
     public Page<UserEntity> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    @Override
-    public <S extends UserEntity> S save(S entity) {
-        String encodedPass = new BCryptPasswordEncoder().encode(entity.getUserPass());
-        entity.setUserPass(encodedPass);
-        return userRepository.save(entity);
     }
 
     @Override

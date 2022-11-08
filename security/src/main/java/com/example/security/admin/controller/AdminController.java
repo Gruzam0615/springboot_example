@@ -1,4 +1,4 @@
-package com.example.security.admin.admin.controller;
+package com.example.security.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.security.admin.admin.service.AdminService;
+import com.example.security.admin.service.AdminService;
 import com.example.security.security.CustomUserDetails;
-import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired AdminService userService;
+    @Autowired
+    AdminService userService;
     
     @GetMapping("/test01")
     @ResponseBody
