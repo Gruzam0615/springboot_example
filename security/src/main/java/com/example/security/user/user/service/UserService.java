@@ -1,4 +1,4 @@
-package com.example.security.user.service;
+package com.example.security.user.user.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,8 +14,8 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.security.user.entity.UserEntity;
-import com.example.security.user.repository.UserRepository;
+import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.user.repository.UserRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class UserService implements UserRepository{
 
-    @Autowired private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public <S extends UserEntity> S save(S entity) {
@@ -39,8 +40,20 @@ public class UserService implements UserRepository{
         return userRepository.save(entity);
     }
 
+    @Override
     public UserEntity findByUserAccount(String userAccount) {
         return userRepository.findByUserAccount(userAccount);
+    }
+
+    @Override
+    public int updateSignInToken(Long userIdx, String signInToken) {
+        log.info("[updateSignInToken] 사용자 번호: {} 사용자의 signInToken을 갱신합니다.", userIdx);
+        return userRepository.updateSignInToken(userIdx, signInToken);
+    }
+
+    @Override
+    public UserEntity findBySignInToken(String accessToken) {
+        return userRepository.findBySignInToken(accessToken);
     }
 
     @Override
@@ -141,8 +154,8 @@ public class UserService implements UserRepository{
 
     @Override
     public Optional<UserEntity> findById(Long id) {
-        // TODO Auto-generated method stub
-        return Optional.empty();
+        // return Optional.empty();
+        return userRepository.findById(id);
     }
 
     @Override

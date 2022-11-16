@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.security.admin.service.AdminService;
 import com.example.security.security.CustomUserDetails;
-import com.example.security.user.entity.UserEntity;
+import com.example.security.user.user.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

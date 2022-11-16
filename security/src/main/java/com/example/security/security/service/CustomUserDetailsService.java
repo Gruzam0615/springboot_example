@@ -7,13 +7,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.security.security.CustomUserDetails;
-import com.example.security.user.entity.UserEntity;
-import com.example.security.user.service.UserService;
+import com.example.security.user.user.entity.UserEntity;
+import com.example.security.user.user.service.UserService;
+
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
-    @Autowired private UserService userService;
+    @Autowired 
+    private UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

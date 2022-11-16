@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.security.admin.repository.AdminRepository;
-import com.example.security.user.entity.UserEntity;
+import com.example.security.user.user.entity.UserEntity;
 
 import lombok.extern.slf4j.Slf4j;
 

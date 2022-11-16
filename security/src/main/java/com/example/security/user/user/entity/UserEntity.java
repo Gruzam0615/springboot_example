@@ -1,4 +1,4 @@
-package com.example.security.user.entity;
+package com.example.security.user.user.entity;
 
 import java.time.LocalDateTime;
 
