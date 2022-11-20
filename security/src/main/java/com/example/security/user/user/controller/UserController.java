@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.security.security.CustomUserDetails;
 import com.example.security.user.user.entity.UserEntity;
@@ -77,12 +83,13 @@ public class UserController {
 
     @PostMapping("/signInSuccess")
     public String signInSuccess(
-        Model model,        
+        RedirectAttributes redirectAttributes,
         @AuthenticationPrincipal CustomUserDetails user
     ) {
         log.info("사용자 {} 가 로그인했습니다.", user.getUsername());
-        model.addAttribute("userAccount", user.getUsername());
-        return "user/index";
+        redirectAttributes.addAttribute("userAccount", user.getUsername());
+
+        return "redirect:/user/";
     }
     
     @GetMapping("/afterSignInSuccess")
@@ -91,9 +98,14 @@ public class UserController {
         @RequestParam(name = "accessToken") String accessToken,
         HttpServletRequest request,
         HttpServletResponse response
-    )throws IOException  {       
+    )throws IOException  {
+        RequestCache requestCache = new HttpSessionRequestCache();
+        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
         int updateToken = userService.updateSignInToken(userIdx, accessToken);
         UserEntity user = userService.findBySignInToken(accessToken);      
+
+        request.setAttribute("userAccount", user.getUserAccount());
 
         Cookie cookie = new Cookie("accessToken", accessToken);
         cookie.setDomain("localhost");
@@ -101,7 +113,7 @@ public class UserController {
         // cookie.setMaxAge(3600 * 24);
         cookie.setMaxAge(600);
         response.addCookie(cookie);
-        response.sendRedirect("/");
+        redirectStrategy.sendRedirect(request, response, "/");
     }
     
 
