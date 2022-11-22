@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User signIn</title>
+</head>
+<body>
+    <main>
+    <h3>User 로그인</h3>
+    <form method="POST" action="/user/signInProcess">
+        <label for="userAccount">아이디</label>
+        <input type="text" id="userAccount" name="userAccount" value="" />
+        <br/>
+        <label for="userPass">패스워드</label>
+        <input type="password" id="userPass" name="userPass" value="" />
+        <br/>
+        <input type="submit" value="로그인"/>
+        <br/>
+        <input class="btn-to-signUp" type="button" value="회원가입"/>
+        <!-- <input type="button" id="signInBtn" value="로그인"/> -->
+    </form>
+    </main>
+</body>
+<script>
+    const toSignUpBtn = document.querySelector(".btn-to-signUp");
+    toSignUpBtn.addEventListener("click", () => {
+        window.location.href = "/user/signUp";
+    })
+// const signInBtn = document.querySelector("#signInBtn");
+// signInBtn.addEventListener("click", () => {
+//     const userAccount = document.querySelector("#userAccount").value;
+//     const userPass = document.querySelector("#userPass").value;
+//     const url = "/user/signInProcess"
+//     let formData = new FormData();
+//         formData.append("userAccount", userAccount);
+//         formData.append("userPass", userPass);
+//     const option = {
+//         method: "POST",
+//         body: formData
+//     }
+// })
+</script>
+</html>
