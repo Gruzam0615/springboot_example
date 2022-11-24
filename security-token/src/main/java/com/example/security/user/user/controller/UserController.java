@@ -1,6 +1,9 @@
 package com.example.security.user.user.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +15,6 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.security.security.CustomUserDetails;
 import com.example.security.user.user.entity.UserEntity;
 import com.example.security.user.user.service.UserService;
+import com.example.security.util.token.SignInTokenService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,11 +41,7 @@ public class UserController {
     @Autowired 
     private UserService userService;
     
-    @GetMapping("/test01")
-    @ResponseBody
-    public String test01() {
-        return "/test01";
-    }
+    private SignInTokenService signInTokenService;
 
     @GetMapping("/")
     public String userIndex() {
@@ -99,21 +98,49 @@ public class UserController {
         HttpServletRequest request,
         HttpServletResponse response
     )throws IOException  {
+        log.info("[afterSignInSuccess] 로그인 완료 userIdx: {} ", userIdx);
+
+        // Session의 모든 Attribute를 조회
+        // Enumeration<String> attributes = request.getSession().getAttributeNames();
+        // while (attributes.hasMoreElements()) {
+        //     String attribute = (String) attributes.nextElement();
+        //     System.err.println(attribute+" : "+request.getSession().getAttribute(attribute));
+        // }
+
         RequestCache requestCache = new HttpSessionRequestCache();
         RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
         int updateToken = userService.updateSignInToken(userIdx, accessToken);
         UserEntity user = userService.findBySignInToken(accessToken);      
 
-        request.setAttribute("userAccount", user.getUserAccount());
-
         Cookie cookie = new Cookie("accessToken", accessToken);
         cookie.setDomain("localhost");
         cookie.setPath("/");
         // cookie.setMaxAge(3600 * 24);
-        cookie.setMaxAge(600);
+        cookie.setMaxAge(60);
         response.addCookie(cookie);
         redirectStrategy.sendRedirect(request, response, "/");
+    }
+
+    @GetMapping("/updateSignInUser")
+    @ResponseBody
+    public Map<String, Object> updateSignInUser(String accessToken) {
+        Map<String, Object> result = new HashMap<>();
+        log.info("[updateSignInUser] token: {} 과 일치하는 사용자의 정보 조회", accessToken);
+
+        if(accessToken != null) {
+            Long userIdx = signInTokenService.getUsersIdxFromToken(accessToken);
+
+            Optional<UserEntity> userEntity = userService.findById(userIdx);
+
+            result.put("userIdx", userEntity.get().getUserIdx());
+            result.put("userAccount", userEntity.get().getUserAccount());
+        }
+        else {
+            result.put("userAccount", null);
+        }        
+        
+        return result;
     }
     
 

@@ -59,12 +59,11 @@ public class SignInTokenService {
         return calendar.getTime();
     }
 
-    // Token에서 Claims를 추출 현재 Claims로 userIdx를 사용
-    private Long getUsersIdxFromToken(String token) {
+    // Token에서 Subject를 출력
+    public Long getUsersIdxFromToken(String token) {
         DecodedJWT decodedJwt = JWT.decode(token);
-        Claim claim = decodedJwt.getClaim("userIdx");
-        Long result = claim.asLong();
-        return result;
+        Long userIdx = Long.parseLong(decodedJwt.getSubject());
+        return userIdx;
     }
 
     // Token 유효성 검사

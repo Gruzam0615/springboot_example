@@ -38,7 +38,7 @@ public class CustomSecurityConfig {
         http
             .authorizeRequests()
                 .antMatchers("/", "/user/signUp", "/user/signUpProcess", "/user/signIn").permitAll()
-                .anyRequest().hasAuthority("CLIENT");                
+                .anyRequest().authenticated();
                 // .anyRequest().permitAll();
 
 
@@ -47,15 +47,12 @@ public class CustomSecurityConfig {
                 .loginPage("/user/signIn")
                     .loginProcessingUrl("/user/signInProcess")
                         .usernameParameter("userAccount").passwordParameter("userPass")
-                        .successForwardUrl("/user/signInSuccess")
-                        .failureForwardUrl("/user/signInFailure")
-                        // .successHandler(new UserSignInSuccess())
-                        // .failureHandler(new UserSignInFailure())
+                        .successHandler(new UserSignInSuccess())
+                        .failureHandler(new UserSignInFailure())
             .and()
                 .logout()
                     .logoutUrl("/user/signOut")
                         .deleteCookies("JSESSIONID")
-                        // .logoutSuccessUrl("/user/signOutSuccess");
                         .logoutSuccessHandler(new SignOutSuccess());
                         
        
