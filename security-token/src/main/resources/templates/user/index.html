@@ -9,8 +9,8 @@
             <h3>Welcome <span id="userAccount"></span></h3>
             <a id="signBtn" href="/user/signIn">로그인</a>
         </div>
-        <div id="list">
-
+        <div id="listDiv">
+            <ul id="list"></ul>
         </div>
     </main>
 </body>
@@ -52,7 +52,7 @@
     userInfo.then((result) => {
         const userAccountEl = document.querySelector("#userAccount");
         const signBtnEl = document.querySelector("#signBtn");
-        const divListEl = document.querySelector("#list");
+        const ulEl = document.querySelector("#list");
 
         const userAccountValue = result.userAccount;
 
@@ -65,16 +65,16 @@
             signBtnEl.setAttribute("id", "signBtn");
             signBtnEl.setAttribute("href", "/user/signOut");
 
-            const spanEl = document.createElement("span");
-            spanEl.setAttribute("onclick", "item01()");
-            spanEl.innerHTML = "item01";
+            const listEl = document.createElement("li");
+            listEl.setAttribute("onclick", "item01()");
+            listEl.innerHTML = "item01";
 
-            const spanEl02 = document.createElement("span");
-            spanEl02.setAttribute("onclick", "item02()");
-            spanEl02.innerHTML = "item02";
+            const listEl02 = document.createElement("li");
+            listEl02.setAttribute("onclick", "item02()");
+            listEl02.innerHTML = "item02";
 
-            divListEl.appendChild(spanEl);
-            divListEl.appendChild(spanEl02);
+            ulEl.appendChild(listEl);
+            ulEl.appendChild(listEl02);
         }
 
     })
