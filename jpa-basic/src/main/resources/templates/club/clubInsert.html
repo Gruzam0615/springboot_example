@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>JPA01</title>
+</head>
+<body>
+<main>
+    <h1>클럽 등록</h1>
+    <div class="clubDiv">
+        <label for="clubName">클럽명: </label>
+        <input type="text" id="clubName" class="clubName" name="clubName" />
+        <br/>
+        <div class="clubCategoryDiv">
+            <label for="clubCategory1" class="clubCategoryLabel">분야: </label>
+            <input type="text" class="clubCategory" name="clubCategory1"/>
+            <br/>
+        </div>
+        <input type="button" id="addCategoryBtn" value="분야 추가" />
+        <br/>
+        <div class="clubIconDiv">
+            <label for="clubIcon">클럽 아이콘: </label>
+            <input id="clubIcon" name="clubIcon" type="file" accept="image/png, image/gif, image/jpeg" />
+        </div>
+        <button id="addClub" onClick="addClub()">클럽 등록</button>
+    </div>
+</main>
+</body>
+<script>
+const addCategoryBtn = document.querySelector("#addCategoryBtn");
+
+addCategoryBtn.addEventListener("click", () => {
+
+    const clubCategoryDiv = document.querySelector(".clubCategoryDiv");
+    const clubCategoryInput = document.querySelectorAll(".clubCategory");
+
+    if(clubCategoryInput.length >= 5) {
+        alert("카테고리는 5개를 초과할 수 없습니다.");
+    }
+    else {
+        const categoryLabel = document.createElement("label");
+        categoryLabel.setAttribute("for", "clubCateogry" + Number(clubCategoryInput.length + 1));
+        categoryLabel.setAttribute("class", "clubCategoryLabel");
+        categoryLabel.innerHTML = "분야: ";
+
+        const categoryInput = document.createElement("input");
+        categoryInput.setAttribute("type", "text")
+        categoryInput.setAttribute("class", "clubCategory");
+        categoryInput.setAttribute("name", "clubCategory" + Number(clubCategoryInput.length + 1));
+
+        const brElement = document.createElement("br");
+
+        clubCategoryDiv.appendChild(categoryLabel);
+        clubCategoryDiv.appendChild(categoryInput);
+        clubCategoryDiv.appendChild(brElement);
+    }    
+
+});
+
+const imageHandler = (image) => {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(image);
+    return reader;
+}
+
+const addClub = () => {
+
+    const clubName = document.querySelector(".clubName");
+    const clubCategoryInput = document.querySelectorAll(".clubCategory");
+    const clubIcon = document.querySelector("#clubIcon");
+
+    let formData = new FormData();
+
+    formData.set("clubName", clubName.value);
+    let clubCategory = [];
+    for(let i = 0; i < clubCategoryInput.length; i++) {
+        clubCategory.push(clubCategoryInput[i].value);
+    }
+    formData.set("clubCategory", clubCategory);
+    console.log(clubIcon.files[0]);
+    // formData.set("clubIcon", new Blob([clubIcon.value], { type: "application/json"}));
+    formData.set("clubIcon", clubIcon.files[0])
+
+    const requestURL = `/club/insert`;
+    const option = {
+        method: "POST",
+        body: formData,
+    }
+
+    fetch(requestURL, option)
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+
+}
+
+
+</script> 
+</html>
