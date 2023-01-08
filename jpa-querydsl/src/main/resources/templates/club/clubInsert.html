@@ -14,12 +14,13 @@
         <input type="button" id="addCategoryBtn" value="분야 추가" />
         <br/>
         <div class="clubCategoryDiv"></div>
-        <input type="button" id="addCategory" value="클럽 등록" />
+        <input type="button" id="addClub" value="클럽 등록" />
     </div>
 </main>
 </body>
 <script>
 const addCategoryBtn = document.querySelector("#addCategoryBtn");
+const addClubBtn = document.querySelector("#addClub");
 
 addCategoryBtn.addEventListener("click", () => {
 
@@ -41,6 +42,31 @@ addCategoryBtn.addEventListener("click", () => {
     clubCategoryDiv.appendChild(categoryInput);
     clubCategoryDiv.appendChild(brElement);
 
-})
+});
+
+addClubBtn.addEventListener("click", () => {
+    const requestURL = `/club/insert`;
+    const formData = new FormData();
+
+    const clubNameData = document.querySelector("#clubName").value;
+    const clubCategory = document.querySelectorAll(".clubCategory");
+
+    formData.append("clubName", clubNameData);
+    if(clubCategory != null) {
+        for(let i = 0; i < clubCategory.length; i++) {
+            formData.append("clubCategory", clubCategory[i].value);
+        }
+    }
+
+    const options = {
+        method: "POST",
+        body: formData,
+    }
+
+    fetch(requestURL, options)
+        .then(response => response.text())
+        .then(result => console.log(result) );
+});
+
 </script> 
 </html>
