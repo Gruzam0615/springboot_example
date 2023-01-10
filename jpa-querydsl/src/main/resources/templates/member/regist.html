@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>JPA01</title>
+</head>
+<body>
+<main>
+    <h1>멤버 등록</h1>
+    <div class="memberDiv">
+        <label for="memberName">회원 이름: </label>
+        <input type="text" id="memberName" class="memberName" name="memberName" />
+        <br/>
+        <label for="teamName">팀 이름: </label>
+        <input type="text" id="teamName" class="teamName" name="teamName" />
+        <br/>        
+        <input type="button" id="addMember" value="회원 등록" />
+    </div>
+</main>
+</body>
+<script>
+const addMemberBtn = document.querySelector("#addMember");
+
+addMemberBtn.addEventListener("click", () => {
+    const requestURL = `/member/regist`;
+    const formData = new FormData();
+
+    const memberName = document.querySelector("#memberName").value;
+    const teamName = document.querySelector("#teamName").value;
+
+    formData.append("memberName", memberName);
+    formData.append("teamName", teamName);
+
+    const options = {
+        method: "POST",
+        body: formData,
+    }
+
+    fetch(requestURL, options)
+        .then(response => response.text())
+        .then(result => console.log(result) );
+});
+
+</script> 
+</html>
