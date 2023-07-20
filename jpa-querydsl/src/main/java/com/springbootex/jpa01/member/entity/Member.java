@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import com.springbootex.jpa01.team.entity.Team;
 
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"memberId", "memberName"})
+@ToString(of = {"memberId", "memberName", "team"})
 public class Member {
     
     @Id
@@ -40,6 +39,11 @@ public class Member {
     
     public Member(String memberName, int memberAge) {
         this(memberName, memberAge,null);
+    }
+
+    public Member(Long memberId, String memberName) {
+        this.memberId = memberId;
+        this.memberName = memberName;
     }
 
     public Member(String memberName, int memberAge, Team team) {

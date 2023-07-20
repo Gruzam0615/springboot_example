@@ -1,7 +1,7 @@
 buildscript {
 	ext {
 		queryDslVersion = "5.0.0"
-	}	
+	}
 }
 
 plugins {
@@ -15,7 +15,7 @@ group = 'com.springbootex'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-configurations {
+configurations {	
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -28,14 +28,16 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
+	// springboot version 3.0.0 미만일 경우의 queryDsl 의존성 패키지 설정
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'	
+	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'

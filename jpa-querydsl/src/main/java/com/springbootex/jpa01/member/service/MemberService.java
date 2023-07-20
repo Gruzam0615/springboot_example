@@ -27,9 +27,13 @@ public class MemberService implements MemberRepository {
     }
 
     @Override
+    public Member findByMemberId(Long memberId) {
+        return memberRepository.findByMemberId(memberId);
+    }
+
+    @Override
     public List<Member> findAll() {
-        // TODO Auto-generated method stub
-        return null;
+        return memberRepository.findAll();
     }
 
     @Override
