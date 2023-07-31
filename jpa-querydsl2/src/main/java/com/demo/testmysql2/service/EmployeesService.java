@@ -1,5 +1,6 @@
 package com.demo.testmysql2.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,7 @@ import com.demo.testmysql2.entity.QSalaries;
 import com.demo.testmysql2.repository.EmployeesRepository;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
@@ -228,11 +230,28 @@ public class EmployeesService implements EmployeesRepository {
             //     s.salary, s.from_date, s.to_date
             // ))
             .select(Projections.fields(EmployeesDto.class,
+                    e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
+                    s.salary, s.from_date, s.to_date
+            ))
+            .from(e)
+            .leftJoin(e.salaries, s)
+            .on(s.emp_no.eq(e.emp_no))
+            .limit(10)
+            .fetch();
+    }
+
+    public List<EmployeesDto> employeesFindAll3() {
+        JPAQueryFactory qf = new JPAQueryFactory(em);     
+        QEmployees e = new QEmployees("e");
+        QSalaries s = new QSalaries("s");
+
+        return qf
+            .select(Projections.fields(EmployeesDto.class,
                     e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date
             ))
             .from(e)
-            // .leftJoin(e.salaries, s)
-            // .on(s.emp_no.eq(e.emp_no))
+            .leftJoin(e.salaries, s)
+            .on(s.emp_no.eq(e.emp_no))
             .limit(10)
             .fetch();
     }
@@ -241,6 +260,17 @@ public class EmployeesService implements EmployeesRepository {
     public List<Object> EmployeesJoinFindAll() {
         return employeesRepository.EmployeesJoinFindAll();
         // throw new UnsupportedOperationException("Unimplemented method 'EmployeesJoinTitlesFindAll'");
+    }
+
+    @Override
+    public List<Tuple> EmployeesSalaryJoin() {
+        List<Tuple> response = employeesRepository.EmployeesSalaryJoin();
+        // for(Tuple r : response) {
+        //     int emp_no = r.get(0, Employees.class.get)
+        //     System.out.println(emp_no);
+        // }
+       
+        return null;
     }
     
 }

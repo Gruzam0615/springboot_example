@@ -46,9 +46,37 @@ public class EmployeesController {
         }
     }
 
+    @GetMapping("/EmployeesFindAll3")
+    public ResponseEntity<Object> employeesFindAll3(HttpServletRequest request, HttpServletResponse response) {
+        List<EmployeesDto> data = employeesService.employeesFindAll3();
+        if(data != null) {
+        //    data = data.subList(0, 10);
+            return new ResponseEntity<Object>(data, null, HttpServletResponse.SC_OK);
+        }
+        else {
+            System.out.println("SSSSS");
+            CustomResponseEntity result = new CustomResponseEntity(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, null);
+            return new ResponseEntity<Object>(result, null, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/EmployeesJoinFindAll")
     public ResponseEntity<Object> EmployeesTitlesF(HttpServletRequest request, HttpServletResponse response) throws Exception, CustomExceptionHandler {
         List<Object> data = employeesService.EmployeesJoinFindAll();
+        if(data != null) {
+            // data = data.subList(0, 10);
+            return new ResponseEntity<Object>(data, null, HttpServletResponse.SC_OK);
+        }
+        else {
+            System.out.println("SSSSS");
+            CustomResponseEntity result = new CustomResponseEntity(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, null);
+            return new ResponseEntity<Object>(result, null, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/EmployeesSalaryJoin")
+    public ResponseEntity<Object> EmployeesSalaryJoin(HttpServletRequest request, HttpServletResponse response) throws Exception, CustomExceptionHandler {
+        List<Tuple> data = employeesService.EmployeesSalaryJoin();
         if(data != null) {
             // data = data.subList(0, 10);
             return new ResponseEntity<Object>(data, null, HttpServletResponse.SC_OK);
