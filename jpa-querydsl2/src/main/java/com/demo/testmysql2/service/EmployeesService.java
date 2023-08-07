@@ -1,11 +1,10 @@
 package com.demo.testmysql2.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -15,13 +14,16 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 
 import com.demo.testmysql2.dto.EmployeesDto;
+import com.demo.testmysql2.dto.SalariesDto;
 import com.demo.testmysql2.entity.Employees;
 import com.demo.testmysql2.entity.QEmployees;
 import com.demo.testmysql2.entity.QSalaries;
+import com.demo.testmysql2.entity.QTitles;
+import com.demo.testmysql2.entity.Salaries;
+import com.demo.testmysql2.entity.Titles;
 import com.demo.testmysql2.repository.EmployeesRepository;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
@@ -34,7 +36,7 @@ public class EmployeesService implements EmployeesRepository {
     private EmployeesRepository employeesRepository;
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Override
     public void flush() {
@@ -220,40 +222,57 @@ public class EmployeesService implements EmployeesRepository {
     }
 
     public List<EmployeesDto> employeesFindAll2() {
-        JPAQueryFactory qf = new JPAQueryFactory(em);     
+        JPAQueryFactory qf = new JPAQueryFactory(em);
+
         QEmployees e = new QEmployees("e");
+        QTitles t = new QTitles("t");
         QSalaries s = new QSalaries("s");
 
         return qf
             // .select(Projections.constructor(EmployeesDto.class,
-            //     e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
-            //     s.salary, s.from_date, s.to_date
+            //     e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date
             // ))
             .select(Projections.fields(EmployeesDto.class,
                     e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
                     s.salary, s.from_date, s.to_date
             ))
             .from(e)
-            .leftJoin(e.salaries, s)
-            .on(s.emp_no.eq(e.emp_no))
+            // .leftJoin(e.salaries, s)
+            // .on(s.emp_no.eq(e.emp_no))
             .limit(10)
             .fetch();
     }
 
-    public List<EmployeesDto> employeesFindAll3() {
-        JPAQueryFactory qf = new JPAQueryFactory(em);     
-        QEmployees e = new QEmployees("e");
-        QSalaries s = new QSalaries("s");
+    public List<Employees> employeesFindAll3() {
+        JPAQueryFactory qf = new JPAQueryFactory(em);
 
+        QEmployees e = new QEmployees("e");
+        QTitles t = new QTitles("t");
+        QSalaries s = new QSalaries("s");
         return qf
-            .select(Projections.fields(EmployeesDto.class,
-                    e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date
-            ))
-            .from(e)
-            .leftJoin(e.salaries, s)
-            .on(s.emp_no.eq(e.emp_no))
-            .limit(10)
+            // .select(Projections.fields(
+            //     EmployeesDto.class, e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
+            //         Projections.fields(SalariesDto.class, s.emp_no, s.salary, s.from_date, s.to_date)
+            // ))
+            .selectFrom(e)
+            .limit(5)
             .fetch();
+    }
+
+    public List<EmployeesDto> employeesFindAll4() {
+        JPAQueryFactory qf = new JPAQueryFactory(em);
+
+        QEmployees e = new QEmployees("e");
+        QTitles t = new QTitles("t");
+        QSalaries s = new QSalaries("s");
+        return (List<EmployeesDto>) qf
+            .from(e)
+            .limit(5)
+            .fetch();
+    }
+
+    public List<EmployeesDto> employeesFindAll5() {
+        return (List<EmployeesDto>) em.find(EmployeesDto.class, "emp_no");
     }
 
     @Override
@@ -262,15 +281,4 @@ public class EmployeesService implements EmployeesRepository {
         // throw new UnsupportedOperationException("Unimplemented method 'EmployeesJoinTitlesFindAll'");
     }
 
-    @Override
-    public List<Tuple> EmployeesSalaryJoin() {
-        List<Tuple> response = employeesRepository.EmployeesSalaryJoin();
-        // for(Tuple r : response) {
-        //     int emp_no = r.get(0, Employees.class.get)
-        //     System.out.println(emp_no);
-        // }
-       
-        return null;
-    }
-    
 }

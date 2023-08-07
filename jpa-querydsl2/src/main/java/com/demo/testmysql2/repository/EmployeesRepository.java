@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.testmysql2.dto.EmployeesDto;
 import com.demo.testmysql2.entity.Employees;
-import com.querydsl.core.Tuple;
 
 public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
 
@@ -26,15 +25,15 @@ public interface EmployeesRepository extends JpaRepository<Employees, Integer> {
     )
     List<Object> EmployeesJoinFindAll();
 
-    @Query(
-        value = "SELECT e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date " +
-        // "GROUP_CONCAT(s.salary SEPARATOR ',') as salary " +
-        "FROM employees e " + 
-        "LIMIT 10"
-        // "LEFT JOIN salaries s ON s.emp_no = e.emp_no " +
-        // "GROUP BY (e.emp_no) " +
-        , nativeQuery = true
-    ) 
-    List<Tuple> EmployeesSalaryJoin();
+    // @Query(
+    //     value = "SELECT e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date " +
+    //     // "GROUP_CONCAT(s.salary SEPARATOR ',') as salary " +
+    //     "FROM employees e " + 
+    //     "LIMIT 10"
+    //     // "LEFT JOIN salaries s ON s.emp_no = e.emp_no " +
+    //     // "GROUP BY (e.emp_no) " +
+    //     , nativeQuery = true
+    // ) 
+    // List<EmployeesDto> EmployeesSalaryJoin();
 
 }
