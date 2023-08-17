@@ -13,25 +13,35 @@ import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuer
 import org.springframework.stereotype.Service;
 
 import com.demo.testmysql2.dto.EmployeesDto;
-import com.demo.testmysql2.entity.Employees;
 import com.demo.testmysql2.entity.QEmployees;
 import com.demo.testmysql2.entity.QSalaries;
 import com.demo.testmysql2.entity.QTitles;
-import com.demo.testmysql2.repository.EmployeesRepository;
-import com.querydsl.core.types.Projections;
+import com.demo.testmysql2.entity.Titles;
+import com.demo.testmysql2.repository.TitlesRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @Service
-public class EmployeesService implements EmployeesRepository {
+public class TitlesService implements TitlesRepository {
 
     @Autowired
-    private EmployeesRepository employeesRepository;
+    private TitlesRepository titlesRepository;
 
     @PersistenceContext
     private EntityManager em;
+
+    public List<String> findAllTitle() {
+        JPAQueryFactory qf = new JPAQueryFactory(em);
+
+        QTitles t = new QTitles("t");
+
+        return qf
+            .select(t.title).distinct()
+            .from(t)
+            .fetch();
+    }
 
     @Override
     public void flush() {
@@ -40,25 +50,25 @@ public class EmployeesService implements EmployeesRepository {
     }
 
     @Override
-    public <S extends Employees> S saveAndFlush(S entity) {
+    public <S extends Titles> S saveAndFlush(S entity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'saveAndFlush'");
     }
 
     @Override
-    public <S extends Employees> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Titles> List<S> saveAllAndFlush(Iterable<S> entities) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'saveAllAndFlush'");
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Employees> entities) {
+    public void deleteAllInBatch(Iterable<Titles> entities) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAllInBatch'");
     }
 
     @Override
-    public void deleteAllByIdInBatch(Iterable<Integer> ids) {
+    public void deleteAllByIdInBatch(Iterable<Long> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAllByIdInBatch'");
     }
@@ -70,70 +80,67 @@ public class EmployeesService implements EmployeesRepository {
     }
 
     @Override
-    public Employees getOne(Integer id) {
+    public Titles getOne(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOne'");
     }
 
     @Override
-    public Employees getById(Integer id) {
+    public Titles getById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getById'");
     }
 
     @Override
-    public Employees getReferenceById(Integer id) {
+    public Titles getReferenceById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getReferenceById'");
     }
 
     @Override
-    public <S extends Employees> List<S> findAll(Example<S> example) {
+    public <S extends Titles> List<S> findAll(Example<S> example) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public <S extends Employees> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Titles> List<S> findAll(Example<S> example, Sort sort) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public <S extends Employees> List<S> saveAll(Iterable<S> entities) {
+    public <S extends Titles> List<S> saveAll(Iterable<S> entities) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'saveAll'");
     }
 
     @Override
-    public List<Employees> findAll() {
-        if(employeesRepository.findAll() == null)
-            throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-        else
-            return employeesRepository.findAll();
-        
+    public List<Titles> findAll() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public List<Employees> findAllById(Iterable<Integer> ids) {
+    public List<Titles> findAllById(Iterable<Long> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAllById'");
     }
 
     @Override
-    public <S extends Employees> S save(S entity) {
+    public <S extends Titles> S save(S entity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
     @Override
-    public Optional<Employees> findById(Integer id) {
+    public Optional<Titles> findById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 
     @Override
-    public boolean existsById(Integer id) {
+    public boolean existsById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'existsById'");
     }
@@ -145,25 +152,25 @@ public class EmployeesService implements EmployeesRepository {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
     }
 
     @Override
-    public void delete(Employees entity) {
+    public void delete(Titles entity) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
     @Override
-    public void deleteAllById(Iterable<? extends Integer> ids) {
+    public void deleteAllById(Iterable<? extends Long> ids) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAllById'");
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Employees> entities) {
+    public void deleteAll(Iterable<? extends Titles> entities) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteAll'");
     }
@@ -175,105 +182,45 @@ public class EmployeesService implements EmployeesRepository {
     }
 
     @Override
-    public List<Employees> findAll(Sort sort) {
+    public List<Titles> findAll(Sort sort) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public Page<Employees> findAll(Pageable pageable) {
+    public Page<Titles> findAll(Pageable pageable) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public <S extends Employees> Optional<S> findOne(Example<S> example) {
+    public <S extends Titles> Optional<S> findOne(Example<S> example) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findOne'");
     }
 
     @Override
-    public <S extends Employees> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Titles> Page<S> findAll(Example<S> example, Pageable pageable) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
-    public <S extends Employees> long count(Example<S> example) {
+    public <S extends Titles> long count(Example<S> example) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'count'");
     }
 
     @Override
-    public <S extends Employees> boolean exists(Example<S> example) {
+    public <S extends Titles> boolean exists(Example<S> example) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exists'");
     }
 
     @Override
-    public <S extends Employees, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends Titles, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findBy'");
     }
-
-    public List<EmployeesDto> employeesFindAll2() {
-        JPAQueryFactory qf = new JPAQueryFactory(em);
-
-        QEmployees e = new QEmployees("e");
-        QTitles t = new QTitles("t");
-        QSalaries s = new QSalaries("s");
-
-        return qf
-            // .select(Projections.constructor(EmployeesDto.class,
-            //     e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date
-            // ))
-            .select(Projections.fields(EmployeesDto.class,
-                    e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
-                    s.salary, s.from_date, s.to_date
-            ))
-            .from(e)
-            // .leftJoin(e.salaries, s)
-            // .on(s.emp_no.eq(e.emp_no))
-            .limit(10)
-            .fetch();
-    }
-
-    public List<Employees> employeesFindAll3() {
-        JPAQueryFactory qf = new JPAQueryFactory(em);
-
-        QEmployees e = new QEmployees("e");
-        QTitles t = new QTitles("t");
-        QSalaries s = new QSalaries("s");
-        return qf
-            // .select(Projections.fields(
-            //     EmployeesDto.class, e.emp_no, e.birth_date, e.first_name, e.last_name, e.gender, e.hire_date,
-            //         Projections.fields(SalariesDto.class, s.emp_no, s.salary, s.from_date, s.to_date)
-            // ))
-            .selectFrom(e)
-            .limit(5)
-            .fetch();
-    }
-
-    public List<EmployeesDto> employeesFindAll4() {
-        JPAQueryFactory qf = new JPAQueryFactory(em);
-
-        QEmployees e = new QEmployees("e");
-        QTitles t = new QTitles("t");
-        QSalaries s = new QSalaries("s");
-        return (List<EmployeesDto>) qf
-            .from(e)
-            .limit(10)
-            .fetch();
-    }
-
-    public List<EmployeesDto> employeesFindAll5() {
-        return (List<EmployeesDto>) em.find(EmployeesDto.class, "emp_no");
-    }
-
-    @Override
-    public List<Object> EmployeesJoinFindAll() {
-        return employeesRepository.EmployeesJoinFindAll();
-        // throw new UnsupportedOperationException("Unimplemented method 'EmployeesJoinTitlesFindAll'");
-    }
-
+    
 }
