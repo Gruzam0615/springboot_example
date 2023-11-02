@@ -270,6 +270,16 @@ public class EmployeesService implements EmployeesRepository {
         return (List<EmployeesDto>) em.find(EmployeesDto.class, "emp_no");
     }
 
+    public List<Employees> findByEmpNo(int emp_no) {
+        JPAQueryFactory qf = new JPAQueryFactory(em);
+        QEmployees e = new QEmployees("e");
+
+        return qf
+            .selectFrom(e)
+            .where(e.emp_no.eq(emp_no))
+            .fetch();
+    }
+
     @Override
     public List<Object> EmployeesJoinFindAll() {
         return employeesRepository.EmployeesJoinFindAll();

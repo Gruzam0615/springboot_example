@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>user Index</title>
+</head>
+<body>
+    <main th:if="${userAccount} ne null">
+        <div th:if="${userAccount} ne null">
+            <h3>Welcome [[${userAccount}]]</h3>
+            <a id="signOut" onclick="signOutRequest()">로그아웃</a>
+            <h5 id="testFunc01">테스트01</h5>
+        </div>       
+    </main>
+    <main th:unless="${userAccount} ne null">
+        <div th:unless="${userAccount} ne null">
+            <h3>Welcome GUEST</h3>
+            <a id="signIn" href="/user/signIn">로그인</a>
+        </div>   
+    </main>
+</body>
+<script type="text/javascript">    
+    const accessToken = document.cookie.split("=")[1];
+
+    // console.log(accessToken);    
+    
+    const signOutRequest = () => {
+        const requestURL = "/user/signOut";
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        window.location.href = requestURL;
+        console.log("logout Done...");
+    };
+
+    
+</script>
+</html>
