@@ -200,5 +200,12 @@ public class UsersService implements UsersRepository {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findBy'");
     }
+
+    @Override
+    public Users findByUsersAccount(String usersAccount) {
+        Users u = usersRepository.findByUsersAccount(usersAccount);
+        if(u != null) { return u; }
+        else { return null; }
+    }
     
 }

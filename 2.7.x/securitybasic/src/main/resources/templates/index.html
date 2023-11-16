@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <title>SecurityBasic_Index</title>
 </head>
 <body>
     <h1>Index Page</h1>
-    <p><a href="/sign/signInPage">로그인</a></p>
+    <th:blcok th:if="${user == null}">
+        <p><a href="/sign/signInPage">로그인</a></p>
+    </th:blcok>
+    <th:block th:unless="${user == null}">
+        <h2>Hello ${user.name}</h2>
+        <p><a href="/logout">로그아웃</a></p>
+    </th:block>   
 </body>
 </html>
