@@ -2,7 +2,7 @@ package com.gruzam0615.securitybasic.users.entity;
 
 public enum UsersRole {
 
-    USER("user"),
+    CLIENT("client"),
     ADMIN("admin");
 
     private String role;

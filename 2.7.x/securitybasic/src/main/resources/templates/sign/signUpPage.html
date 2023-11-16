@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <form method="post" th:action="@{/sign/signUp}">
+        <label>ID: </label>
+        <input type="text" name="usersAccount" value="" />
+        <br />
+        <label>Pw: </label>
+        <input type="password" name="usersPassword" value="" />
+        <br />
+        <input type="submit" name="" value="회원가입" />
+    </form>
+</body>
+</html>

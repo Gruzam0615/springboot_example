@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PageController {
     
     @GetMapping
-    @RequestMapping(value = "/")
+    @RequestMapping(value = {"/", "/index"})
     public String index() {
         return "/index";
     }

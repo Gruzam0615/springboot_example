@@ -16,8 +16,9 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long usersIdx;
+    private long usersPrimaryKey;
     private String usersAccount;
-    private String usersPasswrd;
+    private String usersPassword;
     private UsersRole usersRole;
     private LocalDateTime usersJoinDate;
     private String provider;

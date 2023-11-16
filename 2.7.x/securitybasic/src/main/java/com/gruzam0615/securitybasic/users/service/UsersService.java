@@ -1,5 +1,6 @@
 package com.gruzam0615.securitybasic.users.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -10,16 +11,54 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.gruzam0615.securitybasic.users.entity.Users;
+import com.gruzam0615.securitybasic.users.entity.UsersRole;
 import com.gruzam0615.securitybasic.users.repository.UsersRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UsersService implements UsersRepository {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Override
+    public Users findByUsersAccount(String usersAccount) {
+        Users u = usersRepository.findByUsersAccount(usersAccount);
+        if(u != null) { return u; }
+        else { return null; }
+    }
+
+    @Override
+    public <S extends Users> S save(S entity) {
+        Users exist = findByUsersAccount(entity.getUsersAccount());       
+
+        if(exist != null) {
+            log.info("account {} already exist", entity.getUsersAccount());
+            return null;
+        }
+        else {
+            String encoded = bCryptPasswordEncoder.encode(entity.getUsersPassword());
+            entity.setUsersPrimaryKey(entity.getUsersIdx());
+            entity.setUsersPassword(encoded);
+            entity.setUsersRole(UsersRole.CLIENT);
+            entity.setProvider("local");
+            entity.setUsersJoinDate(LocalDateTime.now());
+            return usersRepository.save(entity);
+        }
+
+        
+    
+        // throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
 
     @Override
     public List<Users> findAll() {
@@ -118,12 +157,6 @@ public class UsersService implements UsersRepository {
     }
 
     @Override
-    public <S extends Users> S save(S entity) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
-    }
-
-    @Override
     public Optional<Users> findById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
@@ -137,8 +170,7 @@ public class UsersService implements UsersRepository {
 
     @Override
     public long count() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
+        return usersRepository.count();
     }
 
     @Override
@@ -201,11 +233,6 @@ public class UsersService implements UsersRepository {
         throw new UnsupportedOperationException("Unimplemented method 'findBy'");
     }
 
-    @Override
-    public Users findByUsersAccount(String usersAccount) {
-        Users u = usersRepository.findByUsersAccount(usersAccount);
-        if(u != null) { return u; }
-        else { return null; }
-    }
+    
     
 }
