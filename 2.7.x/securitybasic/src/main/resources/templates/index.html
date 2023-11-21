@@ -10,8 +10,11 @@
         <p><a href="/sign/signInPage">로그인</a></p>
     </th:blcok>
     <th:block th:unless="${user == null}">
-        <h2>Hello ${user.name}</h2>
-        <p><a href="/logout">로그아웃</a></p>
-    </th:block>   
+        <!-- <h2>Hello ${user.usersAccount}</h2> -->
+        <h2 th:text="${user.username}"></h2>
+        <form method="post" th:action="@{/sign/signOut}">
+            <input type="submit" value="로그아웃" />
+        </form>
+    </th:block>
 </body>
 </html>

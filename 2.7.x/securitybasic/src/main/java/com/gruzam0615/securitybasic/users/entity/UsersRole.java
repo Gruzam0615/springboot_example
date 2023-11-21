@@ -6,7 +6,7 @@ public enum UsersRole {
     ADMIN("admin");
 
     private String role;
-
+   
     UsersRole(String role) {
         this.role = role;
     }
