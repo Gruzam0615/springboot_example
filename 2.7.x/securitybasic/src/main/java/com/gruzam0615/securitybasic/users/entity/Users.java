@@ -16,11 +16,14 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long usersIdx;
-    private long usersPrimaryKey;
     private String usersAccount;
     private String usersPassword;
     private UsersRole usersRole;
     private LocalDateTime usersJoinDate;
     private String provider;
+    private boolean expired;
+    private boolean locked;
+    private boolean enabled;
+    private int signInFailureCount;
 
 }

@@ -12,11 +12,22 @@ public class CustomUserDetails implements UserDetails {
     private String usersAccount;
     private String usersPassword;
     private String usersRole;
+    private boolean expired;
+    private boolean locked;
+    private boolean enabled;
 
-    public CustomUserDetails(String usersAccount, String usersPassword, String usersRole) {
+    // public CustomUserDetails(String usersAccount, String usersPassword, String usersRole) {
+    //     this.usersAccount = usersAccount;
+    //     this.usersPassword = usersPassword;
+    //     this.usersRole = usersRole;
+    // }
+    public CustomUserDetails(String usersAccount, String usersPassword, String usersRole, boolean expired, boolean locked, boolean enabled) {
         this.usersAccount = usersAccount;
         this.usersPassword = usersPassword;
         this.usersRole = usersRole;
+        this.expired = expired;
+        this.locked = locked;
+        this.enabled = enabled;
     }
 
     @Override
@@ -43,12 +54,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return expired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return locked;
     }
 
     @Override
@@ -58,7 +69,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
     
 }

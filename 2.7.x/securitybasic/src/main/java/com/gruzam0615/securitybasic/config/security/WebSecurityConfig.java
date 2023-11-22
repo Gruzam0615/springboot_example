@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
+import com.gruzam0615.securitybasic.util.handler.CustomAuthenticationFailureHandler;
 import com.gruzam0615.securitybasic.util.handler.CustomAuthenticationSuccessHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class WebSecurityConfig {
     private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -48,6 +49,7 @@ public class WebSecurityConfig {
             .usernameParameter("account")
             .passwordParameter("password")
             .successHandler(customAuthenticationSuccessHandler)
+            .failureHandler(customAuthenticationFailureHandler)
             .permitAll()
         );
 

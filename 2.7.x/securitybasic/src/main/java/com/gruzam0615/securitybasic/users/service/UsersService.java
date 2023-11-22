@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gruzam0615.securitybasic.users.entity.Users;
 import com.gruzam0615.securitybasic.users.entity.UsersRole;
@@ -47,7 +48,6 @@ public class UsersService implements UsersRepository {
         }
         else {
             String encoded = bCryptPasswordEncoder.encode(entity.getUsersPassword());
-            entity.setUsersPrimaryKey(entity.getUsersIdx());
             entity.setUsersPassword(encoded);
             entity.setUsersRole(UsersRole.CLIENT);
             entity.setProvider("local");
@@ -55,9 +55,32 @@ public class UsersService implements UsersRepository {
             return usersRepository.save(entity);
         }
 
-        
-    
-        // throw new UnsupportedOperationException("Unimplemented method 'save'");
+    }
+
+    @Transactional
+    public Users initSignInFailureCount(String usersAccount) {
+        Users u = findByUsersAccount(usersAccount);
+        u.setSignInFailureCount(0);
+        return u;
+    }
+
+    @Transactional
+    public Users increaseSignInFailureCount(String usersAccount) {
+        Users u = findByUsersAccount(usersAccount);
+        if(u.getSignInFailureCount() < 5) {
+            u.setSignInFailureCount(u.getSignInFailureCount() + 1);
+        }
+        else {
+            u.setLocked(true);
+        }       
+        return u;
+    }
+
+    @Transactional
+    public Users convertEnabled(String usersAccount) {
+        Users u = findByUsersAccount(usersAccount);
+        u.setEnabled(!u.isEnabled());
+        return u;
     }
 
     @Override
