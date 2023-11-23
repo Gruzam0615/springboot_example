@@ -1,4 +1,4 @@
-package com.gruzam0615.securitybasic.users.entity;
+package com.gruzam0615.securitybasic2.users.entity;
 
 public enum UsersRole {
 
@@ -16,3 +16,4 @@ public enum UsersRole {
     }
 
 }
+
