@@ -35,6 +35,11 @@ public class UsersService implements UsersRepository {
     }
 
     @Override
+    public Users findUsersByToken(String signInToken) {
+       return usersRepository.findUsersByUsersAccount(signInToken);
+    }
+
+    @Override
     public List<Users> findAll() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");

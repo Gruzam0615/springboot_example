@@ -8,7 +8,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+/**
+ * @param long usersIdx
+ */
+
+@NoArgsConstructor
 @Data
 @Entity
 public class Users {
@@ -25,6 +31,14 @@ public class Users {
     private boolean locked;
     private boolean enabled;
     private int signInFailureCount;
+
+
+    public Users(long usersIdx, String usersAccount, String usersRole, LocalDateTime usersJoinDate) {
+        this.usersIdx = usersIdx;
+        this.usersAccount = usersAccount;
+        this.usersRole = UsersRole.valueOf(usersRole);
+        this.usersJoinDate = usersJoinDate;
+    }
 
 }
 
