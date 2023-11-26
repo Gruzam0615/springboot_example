@@ -2,6 +2,7 @@ package com.gruzam0615.securitybasic2.users.entity;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,18 +21,35 @@ import lombok.NoArgsConstructor;
 public class Users {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long usersIdx;
+    
+    @Column(nullable=false)
     private String usersAccount;
+
+    @Column(nullable=false)
     private String usersPassword;
+
     private UsersRole usersRole;
+    
     private LocalDateTime usersJoinDate;
+
     private String provider;
+
     private boolean expired;
+
     private boolean locked;
+
     private boolean enabled;
+
     private int signInFailureCount;
 
+    private String signInToken;
+
+    public Users(String usersAccount, String usersPassword) {
+        this.usersAccount = usersAccount;
+        this.usersPassword = usersPassword;
+    }
 
     public Users(long usersIdx, String usersAccount, String usersRole, LocalDateTime usersJoinDate) {
         this.usersIdx = usersIdx;

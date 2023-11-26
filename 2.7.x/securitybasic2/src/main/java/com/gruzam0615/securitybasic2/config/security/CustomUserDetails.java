@@ -7,8 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.gruzam0615.securitybasic2.users.entity.UsersRole;
-
 import lombok.Data;
 
 @Data
@@ -29,6 +27,16 @@ public class CustomUserDetails implements UserDetails {
         this.expired = expired;
         this.locked = locked;
         this.enabled = enabled;
+    }
+
+    public CustomUserDetails(String usersAccount, String usersPassword, String usersRole, boolean expired, boolean locked, boolean enabled, String signInToken) {
+        this.usersAccount = usersAccount;
+        this.usersPassword = usersPassword;
+        this.usersRole = usersRole;
+        this.expired = expired;
+        this.locked = locked;
+        this.enabled = enabled;
+        this.signInToken = signInToken;
     }
 
     @Override

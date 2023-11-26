@@ -1,4 +1,4 @@
-package com.gruzam0615.securitybasic.util.handler;
+package com.gruzam0615.securitybasic2.config.security;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,14 +12,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.gruzam0615.securitybasic.config.security.CustomUserDetails;
-import com.gruzam0615.securitybasic.users.service.UsersService;
+import com.gruzam0615.securitybasic2.users.service.UsersService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomFormLoginSuccess implements AuthenticationSuccessHandler {
 
     @Autowired
     private UsersService usersService;
@@ -30,12 +29,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         
         if((u != null && u.isAccountNonLocked() == true)) {
             log.info("user: {} sign In timestamp: {}", u.getUsername(), LocalDateTime.now());
-            usersService.initSignInFailureCount(u.getUsername());
-            response.sendRedirect("/");
+            // usersService.initSignInFailureCount(u.getUsername());
+            response.sendRedirect("/api/sign/signInSuccess");
         }
         else {
             log.info("user: {} not exist", u.getUsername());
-            response.sendRedirect("/sign/signInPage");
+            // response.sendRedirect("/sign/signInPage");
+            response.sendRedirect("/sign/signInFailure");
         }
 
     }

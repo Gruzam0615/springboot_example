@@ -2,6 +2,11 @@
   {
     "name": "jwt.secretkey",
     "type": "java.lang.String",
-    "description": "For JwtToken props"
+    "description": "JWT secretKey"
+  },
+  {
+    "name": "jwt.issuer",
+    "type": "java.lang.String",
+    "description": "JWT issuer"
   }
 ]}

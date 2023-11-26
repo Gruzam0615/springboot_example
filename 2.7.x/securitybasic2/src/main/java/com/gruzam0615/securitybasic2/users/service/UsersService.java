@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gruzam0615.securitybasic2.users.entity.Users;
 import com.gruzam0615.securitybasic2.users.repository.UsersRepository;
@@ -37,6 +38,18 @@ public class UsersService implements UsersRepository {
     @Override
     public Users findUsersByToken(String signInToken) {
        return usersRepository.findUsersByUsersAccount(signInToken);
+    }
+
+    public String findTokenByUsersAccount(String usersAccount) {
+        Users u = findUsersByUsersAccount(usersAccount);
+        return u.getSignInToken();
+    }
+
+    @Transactional
+    public Users updateUsersToken(String usersAccount, String token) {
+        Users u = findUsersByUsersAccount(usersAccount);
+        u.setSignInToken(token);
+        return u;
     }
 
     @Override
