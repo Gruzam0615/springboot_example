@@ -1,4 +1,4 @@
-package com.gruzam0615.securitybasic2.util;
+package com.gruzam0615.securityjwt.util;
 
 import java.time.LocalDateTime;
 

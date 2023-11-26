@@ -1,4 +1,4 @@
-package com.gruzam0615.securitybasic2.config.security;
+package com.gruzam0615.securityjwt.security.jwt;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +14,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.gruzam0615.securitybasic2.users.entity.UsersRole;
+import com.gruzam0615.securityjwt.security.CustomUserDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,22 +65,24 @@ public class JwtTokenProvider {
             .build();
         decodedJWT = verifier.verify(token);
             
-        if(
-            JWT.decode(token).getExpiresAt().before(new Date()) == true &&
-            decodedJWT.getIssuer().equals(issuer) == true
-        ) {
-            log.info("Token has valid");
-            return true;
-        }
-        else if(JWT.decode(token).getExpiresAt().before(new Date()) == false
-        ) {
-            log.info("Token has expired");
-            return false;
-        }
-        else {
-            log.info("Token has invalid");
-            return false;
-        }
+        log.debug("issuer: {}", decodedJWT.getIssuer());
+        log.debug("payload: {}", decodedJWT.getPayload().toString());
+        return true;
+        // if(
+        //     JWT.decode(token).getExpiresAt().before(new Date()) == true &&
+        //     decodedJWT.getIssuer().equals(issuer) == true
+        // ) {
+        //     log.info("Token has valid");
+        //     return true;
+        // }
+        // else if(JWT.decode(token).getExpiresAt().before(new Date()) == false) {
+        //     log.info("Token has expired");
+        //     return false;
+        // }
+        // else {
+        //     log.info("Token has invalid");
+        //     return false;
+        // }
     }
     
     public String getUserName(String token) {

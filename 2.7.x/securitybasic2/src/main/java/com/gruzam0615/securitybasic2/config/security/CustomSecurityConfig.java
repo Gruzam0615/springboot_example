@@ -16,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
     
-    private final JwtTokenProvider jwtTokenProvider;
     private final CustomFormLoginSuccess customFormLoginSuccess;
     private final CustomFormLoginFailure customFormLoginFailure;
     private final CustomAuthenticationProvider customAuthenticationProvider;
@@ -49,6 +47,8 @@ public class CustomSecurityConfig {
 
         http.authorizeRequests((req) -> req
             .antMatchers("/api/sign/**").permitAll()
+            .antMatchers("/test01").hasRole("CLIENT")
+            .antMatchers("/test02", "/getPrincipal").hasRole("ADMIN")
             .anyRequest().authenticated()
         );
 
@@ -79,11 +79,11 @@ public class CustomSecurityConfig {
         );
 
         // http.apply(new JwtSecurityConfig(jwtTokenProvider));
-        http.addFilterBefore(
-            new JwtFilter(jwtTokenProvider),
-            UsernamePasswordAuthenticationFilter.class
-        );
-        http.authenticationProvider(customAuthenticationProvider);
+        // http.addFilterBefore(
+        //     new JwtFilter(jwtTokenProvider),
+        //     UsernamePasswordAuthenticationFilter.class
+        // );
+        // http.authenticationProvider(customAuthenticationProvider);
 
         return http.build();
     }
