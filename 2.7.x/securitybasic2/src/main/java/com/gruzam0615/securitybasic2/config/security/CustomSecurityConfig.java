@@ -29,7 +29,7 @@ public class CustomSecurityConfig {
     
     private final CustomFormLoginSuccess customFormLoginSuccess;
     private final CustomFormLoginFailure customFormLoginFailure;
-    private final CustomAuthenticationProvider customAuthenticationProvider;
+    // private final CustomAuthenticationProvider customAuthenticationProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
