@@ -74,15 +74,12 @@ public class CustomSecurityConfig {
                     // throw new UnsupportedOperationException("Unimplemented method 'onLogoutSuccess'");
                 }
             })
+            // .deleteCookies("JSESSIONID")
             // .deleteCookies("삭제할쿠키명")
             .permitAll()
         );
 
-        // http.apply(new JwtSecurityConfig(jwtTokenProvider));
-        // http.addFilterBefore(
-        //     new JwtFilter(jwtTokenProvider),
-        //     UsernamePasswordAuthenticationFilter.class
-        // );
+        // FormLogin 등 Authentication 과정을 커스터마이징할 때 사용
         // http.authenticationProvider(customAuthenticationProvider);
 
         return http.build();
