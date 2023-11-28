@@ -1,5 +1,7 @@
 package com.gruzam0615.securityjwt.security.jwt;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -37,10 +39,11 @@ public class JwtTokenProvider {
     // }
 
     private Date expiresAt() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.HOUR, expireDate);
-        return calendar.getTime();
+        // Calendar calendar = Calendar.getInstance();
+        // calendar.setTime(new Date());
+        // calendar.add(Calendar.HOUR, expireDate);
+        // return calendar.getTime();
+        return new Date(System.currentTimeMillis() + expireDate);
     }
 
     public String createToken(String usersAccount, String usersRole) {
@@ -53,7 +56,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails u = customUserDetailsService.loadUserByToken(token);
+        UserDetails u = customUserDetailsService.loadUserByUsername(token);
         return new UsernamePasswordAuthenticationToken(u, null, u.getAuthorities());
     }
 
@@ -67,22 +70,23 @@ public class JwtTokenProvider {
             
         log.debug("issuer: {}", decodedJWT.getIssuer());
         log.debug("payload: {}", decodedJWT.getPayload().toString());
-        return true;
-        // if(
-        //     JWT.decode(token).getExpiresAt().before(new Date()) == true &&
-        //     decodedJWT.getIssuer().equals(issuer) == true
-        // ) {
-        //     log.info("Token has valid");
-        //     return true;
-        // }
-        // else if(JWT.decode(token).getExpiresAt().before(new Date()) == false) {
-        //     log.info("Token has expired");
-        //     return false;
-        // }
-        // else {
-        //     log.info("Token has invalid");
-        //     return false;
-        // }
+        log.debug("exp: {}", decodedJWT.getExpiresAt());
+
+        if(
+            !decodedJWT.getExpiresAt().before(new Date(System.currentTimeMillis())) &&
+            decodedJWT.getIssuer().equals(issuer) == true
+        ) {
+            log.info("Valid token");
+            return true;
+        }
+        else if(decodedJWT.getExpiresAt().before(new Date(System.currentTimeMillis())) == false) {
+            log.info("Expired token");
+            return false;
+        }
+        else {
+            log.info("Invalid token");
+            return false;
+        }
     }
     
     public String getUserName(String token) {

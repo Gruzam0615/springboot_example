@@ -19,15 +19,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UsersRepository usersRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users u = usersRepository.findUsersByUsersAccount(username);
+    public UserDetails loadUserByUsername(String token) throws UsernameNotFoundException {
+        Users u = usersRepository.findUsersByToken(token);
 
         if(u == null) {
-            throw new UsernameNotFoundException("user has not exist username: " + username);
+            throw new UsernameNotFoundException("Anonymous");
         }
         else {
-            log.debug("loadUserByUsername");
-            log.debug("username: {}, userrole: {}", u.getUsersAccount(), u.getUsersRole());
+            log.debug("username: {}, role: {}", u.getUsersAccount(), u.getUsersRole());
             CustomUserDetails cu = new CustomUserDetails(
                 u.getUsersAccount(),
                 u.getUsersPassword(),
@@ -36,28 +35,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                 u.isLocked(),
                 u.isEnabled(),
                 u.getSignInToken()
-            );
-            return cu;
-        }
-        
-    }
-
-    public UserDetails loadUserByToken(String token) throws UsernameNotFoundException {
-        Users u = usersRepository.findUsersByToken(token);
-
-        if(u == null) {
-            throw new UsernameNotFoundException("user has not exist\ntoken: " + token);
-        }
-        else {
-            log.debug("loadUserByToken");
-            log.debug("username: {}, userrole: {}", u.getUsersAccount(), u.getUsersRole());
-            CustomUserDetails cu = new CustomUserDetails(
-                u.getUsersAccount(),
-                u.getUsersPassword(),
-                u.getUsersRole().getRole(),
-                u.isExpired(),
-                u.isLocked(),
-                u.isEnabled()
             );
             return cu;
         }

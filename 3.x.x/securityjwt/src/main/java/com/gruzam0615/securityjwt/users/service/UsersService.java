@@ -10,13 +10,25 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.gruzam0615.securityjwt.security.jwt.JwtTokenProvider;
 import com.gruzam0615.securityjwt.users.entity.Users;
 import com.gruzam0615.securityjwt.users.repository.UsersRepository;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class UsersService implements UsersRepository {
+
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -207,6 +219,29 @@ public class UsersService implements UsersRepository {
     @Override
     public Users findUsersByToken(String signInToken) {
        return usersRepository.findUsersByToken(signInToken);
+    }
+
+    public String signIn(Users user) {
+        log.debug("signIn Called\nparameter: {}", user.toString());
+        
+        String newToken;
+        Users u = this.findUsersByUsersAccount(user.getUsersAccount());
+        
+        if(
+            u != null &&
+            passwordEncoder.matches(user.getUsersPassword(), u.getUsersPassword())
+        ) {
+            log.debug("Requested SignIn username: {}", u.getUsersAccount());
+            newToken = jwtTokenProvider.createToken(u.getUsersAccount(), u.getUsersRole().getRole());
+            u.setSignInFailureCount(0);
+            u.setSignInToken(newToken);
+            return newToken;
+        }
+        else {
+            u.setSignInFailureCount(u.getSignInFailureCount() + 1);
+            return null;
+        }
+        
     }
     
 }
