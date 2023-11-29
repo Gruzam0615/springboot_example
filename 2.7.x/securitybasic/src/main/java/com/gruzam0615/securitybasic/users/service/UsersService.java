@@ -51,6 +51,9 @@ public class UsersService implements UsersRepository {
             entity.setUsersPassword(encoded);
             entity.setUsersRole(UsersRole.CLIENT);
             entity.setProvider("local");
+            entity.setExpired(true);
+            entity.setLocked(true);
+            entity.setEnabled(true);
             entity.setUsersJoinDate(LocalDateTime.now());
             return usersRepository.save(entity);
         }
