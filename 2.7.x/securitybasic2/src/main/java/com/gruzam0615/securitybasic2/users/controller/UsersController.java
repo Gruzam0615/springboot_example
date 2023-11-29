@@ -31,14 +31,6 @@ public class UsersController {
         return new ResponseEntity<>(result, null, HttpStatus.OK);
     }
 
-    // @PostMapping(value="/signIn")
-    // public ResponseEntity<Object> signInMethod(Users user) {
-    //     String account = user.getUsersAccount();
-    //     String password = user.getUsersPassword();
-    //     log.info("account: {}", account);
-    //     return new ResponseEntity<>("/api/sign/signIn", null, HttpStatus.OK);
-    // }
-
     @GetMapping(value="/signInSuccess")
     public ResponseEntity<Object> signInSuccess() {
         log.info("signIn Success");

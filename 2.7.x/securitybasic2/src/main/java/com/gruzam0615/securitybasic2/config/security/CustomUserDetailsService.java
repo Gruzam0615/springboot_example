@@ -42,26 +42,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         
     }
 
-    public UserDetails loadUserByToken(String token) throws UsernameNotFoundException {
-        Users u = usersRepository.findUsersByToken(token);
-
-        if(u == null) {
-            throw new UsernameNotFoundException("user has not exist\ntoken: " + token);
-        }
-        else {
-            log.debug("loadUserByToken");
-            log.debug("username: {}, userrole: {}", u.getUsersAccount(), u.getUsersRole());
-            CustomUserDetails cu = new CustomUserDetails(
-                u.getUsersAccount(),
-                u.getUsersPassword(),
-                u.getUsersRole().getRole(),
-                u.isExpired(),
-                u.isLocked(),
-                u.isEnabled()
-            );
-            return cu;
-        }
-        
-    }
-
 }

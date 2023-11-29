@@ -41,14 +41,14 @@ public class CustomSecurityConfig {
         http.csrf((csrf) -> csrf.disable());
         http.cors((cors) -> cors.disable());
 
-        http.sessionManagement((session) -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        );
+        // http.sessionManagement((session) -> session
+        //     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        // );
 
         http.authorizeRequests((req) -> req
             .antMatchers("/api/sign/**").permitAll()
-            .antMatchers("/test01").hasRole("CLIENT")
-            .antMatchers("/test02", "/getPrincipal").hasRole("ADMIN")
+            .antMatchers("/test01").hasAuthority("client")
+            .antMatchers("/test02", "/getPrincipal").hasAuthority("admin")
             .anyRequest().authenticated()
         );
 
