@@ -20,26 +20,43 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.httpBasic().disable()
-            // .csrf().disable()
-            // H2를 사용하는 경우 start
-            .csrf().requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**")) .and().headers().addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy","script-src 'self'")).frameOptions().disable()            // H2를 사용하는경우 end
+
+        http.httpBasic((basic) -> basic
+            .disable()
+        );            
+            
+        http.csrf((c) -> c
+            // H2를 사용을 위한 설정
+            .requireCsrfProtectionMatcher(new AntPathRequestMatcher("!/h2-console/**")) 
+        );
+
+        http.headers((h) -> h
+            .addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy","script-src 'self'")).frameOptions().disable()         // H2를 사용하는경우 end
+        );
+
+        http.cors((c) -> c
+            .disable());
+
+        http.formLogin((form) -> form
+            .disable());
+            
+        http.authorizeRequests((req) -> req
+            // .antMatcher("/api/**")            
+            .antMatchers("/", "/api/users/**").permitAll()
+        //     .anyRequest().authenticated()
+        );
+
+        http.oauth2Login((o) -> o
+            .authorizationEndpoint()
+            .baseUri("/oauth2/authorization")
             .and()
-            .cors().disable()
-            .formLogin().disable()         
-            // .antMatcher("/api/**")
-            .authorizeRequests()
-                .antMatchers("/", "/api/users/**").permitAll()
-            //     .anyRequest().authenticated();
-        .and()
-            .oauth2Login()
-                .authorizationEndpoint()
-                .baseUri("/oauth2/authorization")
-            .and()
-                .successHandler(successHandler);
-                // .userInfoEndpoint()
-                // .userService(customOAuth2UserService);
+            .successHandler(successHandler)
+            .userInfoEndpoint()
+            .userService(customOAuth2UserService)
+        );
+
         return http.build();
+
     }
 
 }
