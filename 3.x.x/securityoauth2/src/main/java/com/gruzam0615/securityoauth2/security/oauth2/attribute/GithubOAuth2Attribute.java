@@ -19,7 +19,7 @@ public class GithubOAuth2Attribute extends UsersOauthAttribute {
 
     @Override
     public String getRegistrationId() {
-        return (String) attributes.get("sub");
+        return String.valueOf(attributes.get("id"));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class GithubOAuth2Attribute extends UsersOauthAttribute {
 
     @Override
     public String getProfilePicture() {
-        return (String) attributes.get("picture");
+        return (String) attributes.get("avatar_url");
     }
 
     @Override

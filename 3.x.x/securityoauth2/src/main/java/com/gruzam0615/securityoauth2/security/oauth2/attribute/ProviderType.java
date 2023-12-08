@@ -9,8 +9,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ProviderType {
 
-    GOOGLE("Google"),
-    GITHUB("Github"),
+    GOOGLE("google"),
+    GITHUB("github"),
     LOCAL("local");
 
     private final String provider;

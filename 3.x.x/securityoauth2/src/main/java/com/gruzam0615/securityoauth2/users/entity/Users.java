@@ -2,6 +2,8 @@ package com.gruzam0615.securityoauth2.users.entity;
 
 import java.time.LocalDateTime;
 
+import com.gruzam0615.securityoauth2.security.oauth2.attribute.ProviderType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -41,7 +43,10 @@ public class Users {
 
     private String profilePicture;
 
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
+
+    private String providerId;
 
     private boolean expired;
 
@@ -72,6 +77,18 @@ public class Users {
         this.profilePicture = profilePicture;
         this.usersRole = usersRole;
     }
+
+    @Builder
+    public Users(String usersEmail, String profilePicture, UsersRole usersRole) {
+        this.usersEmail = usersEmail;
+        this.profilePicture = profilePicture;
+        this.usersRole = usersRole;
+    }
+
+    // public Users update(String profilePicture) {
+    //     this.profilePicture = profilePicture;
+    //     return this;
+    // }
 
 }
 

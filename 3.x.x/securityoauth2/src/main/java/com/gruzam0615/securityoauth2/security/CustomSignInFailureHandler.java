@@ -18,6 +18,7 @@ public class CustomSignInFailureHandler implements AuthenticationFailureHandler 
     AuthenticationException exception) throws IOException, ServletException {
         request.getSession().setAttribute("error", exception.getMessage());
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, exception.getMessage());
+        response.sendRedirect("/api/sign/signInFailure");
         // throw new UnsupportedOperationException("Unimplemented method 'onAuthenticationFailure'");
     }
 

@@ -8,6 +8,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 application-oauth.yml
+application-ouath.properties
 
 ### STS ###
 .apt_generated
@@ -39,3 +40,5 @@ out/
 
 ### VS Code ###
 .vscode/
+3.x.x/securityoauth2/src/main/resources/application-ouath.properties
+3.x.x/securityoauth2/MEMO.md

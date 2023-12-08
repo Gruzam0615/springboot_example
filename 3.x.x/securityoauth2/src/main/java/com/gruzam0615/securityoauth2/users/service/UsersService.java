@@ -16,12 +16,10 @@ import com.gruzam0615.securityoauth2.users.entity.Users;
 import com.gruzam0615.securityoauth2.users.repository.UsersRepository;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional
 public class UsersService implements UsersRepository {
 
     @Autowired
@@ -218,6 +216,13 @@ public class UsersService implements UsersRepository {
     @Override
     public Users findUsersByToken(String signInToken) {
         return usersRepository.findUsersByToken(signInToken);
+    }
+
+    public Users updateUsersProfilePicture(Users users) {
+        // users.setProvider(users.getProvider());
+        // users.setProfilePicture(users.getProfilePicture());
+        // return users;
+        return this.save(users);
     }
 
 }
