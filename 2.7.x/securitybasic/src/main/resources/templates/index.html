@@ -7,11 +7,13 @@
 <body>
     <h1>Index Page</h1>
     <th:blcok th:if="${user == null}">
+        <p><a href="/sign/signUpPage">회원가입</a></p>
         <p><a href="/sign/signInPage">로그인</a></p>
     </th:blcok>
     <th:block th:unless="${user == null}">
         <!-- <h2>Hello ${user.usersAccount}</h2> -->
         <h2 th:text="${user.username}"></h2>
+        <p><a href="/sign/checkPassPage">마이페이지</a></p>
         <form method="post" th:action="@{/sign/signOut}">
             <input type="submit" value="로그아웃" />
         </form>

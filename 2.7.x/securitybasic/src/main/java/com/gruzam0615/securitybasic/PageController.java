@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gruzam0615.securitybasic.config.security.CustomUserDetails;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,15 +20,16 @@ public class PageController {
     @GetMapping
     @RequestMapping(value = {"/", "/index"})
     public String index(Model model) {
-        CustomUserDetails ud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(ud != null) {            
+        // log.debug(":: {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal().equals("anonymousUser")) {
+            return "/index";
+        }
+        else {
+            CustomUserDetails ud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             log.info("user: {}", ud.toString());
             model.addAttribute("user", ud);
             return "/index";
         }
-        else {
-            return "/index";
-        }  
     }
 
     @GetMapping

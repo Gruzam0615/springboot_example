@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gruzam0615.securitybasic.users.entity.ProviderType;
 import com.gruzam0615.securitybasic.users.entity.Users;
 import com.gruzam0615.securitybasic.users.entity.UsersRole;
 import com.gruzam0615.securitybasic.users.repository.UsersRepository;
@@ -30,6 +31,15 @@ public class UsersService implements UsersRepository {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public boolean checkPassword(Users user) {
+        boolean result = false;
+        Users u = this.findByUsersAccount(user.getUsersAccount());
+        if(u != null) {
+            result = bCryptPasswordEncoder.matches(user.getUsersPassword(), u.getUsersPassword());
+        }
+        return result;
+    }
 
     @Override
     public Users findByUsersAccount(String usersAccount) {
@@ -50,7 +60,7 @@ public class UsersService implements UsersRepository {
             String encoded = bCryptPasswordEncoder.encode(entity.getUsersPassword());
             entity.setUsersPassword(encoded);
             entity.setUsersRole(UsersRole.CLIENT);
-            entity.setProvider("local");
+            entity.setProvider(ProviderType.LOCAL);
             entity.setExpired(true);
             entity.setLocked(true);
             entity.setEnabled(true);
@@ -84,6 +94,12 @@ public class UsersService implements UsersRepository {
         Users u = findByUsersAccount(usersAccount);
         u.setEnabled(!u.isEnabled());
         return u;
+    }
+
+    @Transactional
+    public Users userUpdateMyPage(Users user) {
+        user.setUsersEmail(user.getUsersEmail());
+        return user;
     }
 
     @Override

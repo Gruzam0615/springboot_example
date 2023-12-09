@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Check Pass</title>
+</head>
+<body>
+    <h1>Check Pass</h1>
+    <form method="post" th:action="@{/sign/checkPass}">
+        <input type="hidden" name="usersAccount" th:value="${user.username}" />
+        <label>PW: </label>
+        <input type="password" name="usersPassword" value="" />
+        <br />
+        <input type="submit" name="" value="확인" />
+    </form>
+</body>
+</html>

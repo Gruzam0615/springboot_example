@@ -30,6 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             CustomUserDetails cu = new CustomUserDetails(
                 u.getUsersAccount(),
                 u.getUsersPassword(),
+                u.getUsersEmail(),
                 u.getUsersRole().getRole(),
                 u.isExpired(),
                 u.isLocked(),

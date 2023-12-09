@@ -11,6 +11,7 @@ public class CustomUserDetails implements UserDetails {
 
     private String usersAccount;
     private String usersPassword;
+    private String usersEmail;
     private String usersRole;
     private boolean expired;
     private boolean locked;
@@ -21,9 +22,10 @@ public class CustomUserDetails implements UserDetails {
     //     this.usersPassword = usersPassword;
     //     this.usersRole = usersRole;
     // }
-    public CustomUserDetails(String usersAccount, String usersPassword, String usersRole, boolean expired, boolean locked, boolean enabled) {
+    public CustomUserDetails(String usersAccount, String usersPassword, String usersEmail, String usersRole, boolean expired, boolean locked, boolean enabled) {
         this.usersAccount = usersAccount;
         this.usersPassword = usersPassword;
+        this.usersEmail = usersEmail;
         this.usersRole = usersRole;
         this.expired = expired;
         this.locked = locked;
@@ -32,7 +34,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String toString() {
-        return "username: " + usersAccount + " , " + "usersRole: " + usersRole;
+        return "username: " + usersAccount + " " + "usersRole: " + usersRole;
     }
 
     @Override
@@ -50,6 +52,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return usersAccount;
+    }
+
+    public String getUsersEmail() {
+        return usersEmail;
     }
 
     @Override

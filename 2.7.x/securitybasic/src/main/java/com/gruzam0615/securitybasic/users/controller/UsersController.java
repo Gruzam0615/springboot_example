@@ -1,19 +1,27 @@
 package com.gruzam0615.securitybasic.users.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.gruzam0615.securitybasic.config.security.CustomUserDetails;
 import com.gruzam0615.securitybasic.users.entity.Users;
 import com.gruzam0615.securitybasic.users.service.UsersService;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 
 @Slf4j
@@ -31,6 +39,7 @@ public class UsersController {
 
     @PostMapping(value = "/signUp")
     public String signUp(Users users) {
+        // Thymeleaf에서 formData로 데이터를 전달받기 때문에 Users 엔티티를 통해 데이터를 전달 받을 수 있다.
         log.debug("users: {}", users.toString());
         Users u = usersService.save(users);
         if(u == null) {
@@ -48,11 +57,52 @@ public class UsersController {
     }
 
     @PostMapping(value="/signInSuccess")
-    public String getMethodName(HttpServletRequest request, HttpServletResponse response,
-    Model model) {
+    public String getMethodName(HttpServletRequest request, HttpServletResponse response, Model model) {
         // CustomUserDetails u = (CustomUserDetails) securityContext.getAuthentication().getPrincipal();
         // model.addAttribute("user", u);
         return "/index";
     }
+
+    @GetMapping
+    @RequestMapping(value = "/checkPassPage")
+    public String checkPassPage(Model model) {
+        CustomUserDetails ud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", ud);
+        return "sign/checkPassPage";
+    }
+
+    @PostMapping("/checkPass")
+    public void checkPass(HttpServletResponse response, Users user) throws IOException {
+        log.debug("input Data: {}", user.toString());
+        boolean checkPassResult = usersService.checkPassword(user);
+        if(checkPassResult == true) {
+            response.sendRedirect("/sign/myPage");
+        }
+        else {
+            // return "sign/checkPassPage";
+            response.sendRedirect("/sign/checkPassPage");
+        }
+    }
+    
+    @GetMapping("/myPage")
+    public String myPage(Model model) {
+        log.info("called /sign/myPage");
+        CustomUserDetails ud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        // Users user = usersService.findByUsersAccount(ud.getUsername());
+        log.debug("ud: {}", ud.toString());
+        model.addAttribute("user", ud);
+        return "sign/myPage";
+    }
+    
+    @PostMapping("/myPageUpdate")
+    public String myPageUpdate(Users user) {
+        Users u = usersService.userUpdateMyPage(user);
+        if(u != null) {
+            return "sign/myPage";
+        } 
+        else {
+            return "sign/myPage";
+        }
+    }    
     
 }

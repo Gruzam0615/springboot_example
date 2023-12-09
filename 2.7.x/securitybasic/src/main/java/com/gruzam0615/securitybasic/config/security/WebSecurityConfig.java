@@ -40,8 +40,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests(requests -> requests
-            .antMatchers("/sign/**", "/getPrincipal").permitAll()
-            .anyRequest().authenticated());
+            .antMatchers("/", "/index", "/sign/**").permitAll()
+            .anyRequest().authenticated()
+        );
 
         http.formLogin((form) -> form
             .loginPage("/sign/signInPage")
@@ -60,7 +61,7 @@ public class WebSecurityConfig {
                 public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                 throws IOException, ServletException {
                     log.info("signOut username: " + authentication.getName());
-                    response.sendRedirect("/sign/signInPage");
+                    response.sendRedirect("/");
                 }
             })
             // .deleteCookies("삭제할쿠키명")

@@ -19,15 +19,22 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long usersIdx;
+
+    @Column(nullable = false)
     private String usersAccount;
+
+    @Column(nullable = false)
     private String usersPassword;
+
+    private String usersEmail;
 
     @Enumerated(EnumType.STRING)
     private UsersRole usersRole;
 
     private LocalDateTime usersJoinDate;
 
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
 
     @Column(columnDefinition = "boolean default true")
     private boolean expired;

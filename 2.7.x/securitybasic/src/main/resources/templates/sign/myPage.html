@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>myPage</title>
+</head>
+<body>
+    <h1>myPage</h1>
+    <form method="post" th:action="@{/sign/myPageUpdate}">
+        <label for="usersAccount">Account: </label>
+        <input type="text" name="usersAccount" th:value="${user.username}" readonly/>
+        <label for="usersEmail">Email: </label>
+        <input type="email" name="usersEmail" th:value="${user.usersEmail}" />
+        <br />
+        <input type="submit" name="" value="회원정보 수정" />
+    </form>
+</body>
+</html>
