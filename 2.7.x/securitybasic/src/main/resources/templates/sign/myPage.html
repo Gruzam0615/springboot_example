@@ -8,11 +8,18 @@
     <h1>myPage</h1>
     <form method="post" th:action="@{/sign/myPageUpdate}">
         <label for="usersAccount">Account: </label>
-        <input type="text" name="usersAccount" th:value="${user.username}" readonly/>
+        <input type="text" name="usersAccount" th:value="${user.usersAccount}" readonly/>
+        <br />
         <label for="usersEmail">Email: </label>
         <input type="email" name="usersEmail" th:value="${user.usersEmail}" />
         <br />
         <input type="submit" name="" value="회원정보 수정" />
+        <br />
+    </form>
+    <form method="post" th:action="@{/sign/terminateAccount}">
+        <input type="hidden" name="usersAccount" th:value="${user.usersAccount}" readonly/>
+        <input type="hidden" name="usersEmail" th:value="${user.usersEmail}" readonly/>
+        <input type="submit" value="회원 탈퇴" />
     </form>
 </body>
 </html>

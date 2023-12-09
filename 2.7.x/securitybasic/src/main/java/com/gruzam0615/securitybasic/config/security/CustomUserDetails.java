@@ -34,7 +34,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String toString() {
-        return "username: " + usersAccount + " " + "usersRole: " + usersRole;
+        return "username: " + usersAccount + " " + "usersRole: " + usersRole + " " + "usersEmail: " + usersEmail;
     }
 
     @Override

@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,21 +90,40 @@ public class UsersController {
     public String myPage(Model model) {
         log.info("called /sign/myPage");
         CustomUserDetails ud = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users u = usersService.findByUsersAccount(ud.getUsername());
+
         // Users user = usersService.findByUsersAccount(ud.getUsername());
-        log.debug("ud: {}", ud.toString());
-        model.addAttribute("user", ud);
+        log.debug("ud: {}", u.toString());
+        model.addAttribute("user", u);
         return "sign/myPage";
     }
     
     @PostMapping("/myPageUpdate")
-    public String myPageUpdate(Users user) {
+    public void myPageUpdate(HttpServletResponse response, Users user) throws IOException {
         Users u = usersService.userUpdateMyPage(user);
         if(u != null) {
-            return "sign/myPage";
-        } 
+            log.info("User Information update complete");
+            response.sendRedirect("/sign/myPage");
+        }
         else {
+            log.info("User Information update failed");
+            response.sendRedirect("/sign/myPage");
+        }
+    }
+
+    @PostMapping("/terminateAccount")
+    public String terminateAccount(HttpServletRequest request, HttpServletResponse response, Users user) throws IOException {
+        Users u = usersService.userTerminate(user);
+        if(u == null) {
             return "sign/myPage";
         }
-    }    
+        else {
+            HttpSession session = request.getSession();
+            session.invalidate();
+            SecurityContextHolder.clearContext();
+            return "/index";
+        }
+    }
+    
     
 }

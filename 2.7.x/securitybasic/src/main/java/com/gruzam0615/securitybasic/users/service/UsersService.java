@@ -98,8 +98,16 @@ public class UsersService implements UsersRepository {
 
     @Transactional
     public Users userUpdateMyPage(Users user) {
-        user.setUsersEmail(user.getUsersEmail());
-        return user;
+        Users u = findByUsersAccount(user.getUsersAccount());
+        u.setUsersEmail(user.getUsersEmail());
+        return u;
+    }
+
+    @Transactional
+    public Users userTerminate(Users user) {
+        Users u = findByUsersAccount(user.getUsersAccount());
+        u.setEnabled(false);
+        return u;
     }
 
     @Override
