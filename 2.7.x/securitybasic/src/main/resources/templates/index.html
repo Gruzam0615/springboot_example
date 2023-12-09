@@ -5,6 +5,7 @@
     <title>SecurityBasic_Index</title>
 </head>
 <body>
+    <div th:replace="~{/fragments/bodyHeader :: bodyHeader}"></div>
     <h1>Index Page</h1>
     <th:blcok th:if="${user == null}">
         <p><a href="/sign/signUpPage">회원가입</a></p>

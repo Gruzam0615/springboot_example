@@ -5,6 +5,7 @@
     <title>Check Pass</title>
 </head>
 <body>
+    <div th:replace="~{/fragments/bodyHeader :: bodyHeader}"></div>
     <h1>Check Pass</h1>
     <form method="post" th:action="@{/sign/checkPass}">
         <input type="hidden" name="usersAccount" th:value="${user.username}" />

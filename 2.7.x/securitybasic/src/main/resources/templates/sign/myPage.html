@@ -5,6 +5,7 @@
     <title>myPage</title>
 </head>
 <body>
+    <div th:replace="~{/fragments/bodyHeader :: bodyHeader}"></div>
     <h1>myPage</h1>
     <form method="post" th:action="@{/sign/myPageUpdate}">
         <label for="usersAccount">Account: </label>
