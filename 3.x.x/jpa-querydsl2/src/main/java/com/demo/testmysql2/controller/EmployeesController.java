@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.testmysql2.dto.EmployeesDto;
 import com.demo.testmysql2.entity.Employees;
-import com.demo.testmysql2.handler.CustomResponseEntity;
-import com.demo.testmysql2.handler.exception.CustomExceptionHandler;
 import com.demo.testmysql2.service.EmployeesService;
+import com.demo.testmysql2.utility.CustomResponseEntity;
+import com.demo.testmysql2.utility.exception.CustomExceptionHandler;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

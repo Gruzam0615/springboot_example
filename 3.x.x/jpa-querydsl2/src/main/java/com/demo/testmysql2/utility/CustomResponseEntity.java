@@ -1,4 +1,4 @@
-package com.demo.testmysql2.handler;
+package com.demo.testmysql2.utility;
 
 import java.util.Collection;
 

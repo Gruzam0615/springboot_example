@@ -2,7 +2,6 @@ package com.demo.testmysql2.entity;
 
 import java.sql.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -24,6 +23,10 @@ public class Salaries {
     private int salary;
     private Date from_date;
     private Date to_date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no")
+    private Employees employees;
 
     public Salaries(int salaries_emp_no, int salaray, Date from_date, Date to_date) {
         this.salaries_emp_no = salaries_emp_no;

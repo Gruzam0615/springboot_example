@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
-import com.demo.testmysql2.dto.SalariesDto;
 import com.demo.testmysql2.entity.QSalaries;
 import com.demo.testmysql2.entity.Salaries;
 import com.demo.testmysql2.repository.SalariesRepository;

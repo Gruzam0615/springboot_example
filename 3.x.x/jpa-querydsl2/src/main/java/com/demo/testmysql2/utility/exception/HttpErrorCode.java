@@ -1,4 +1,4 @@
-package com.demo.testmysql2.handler.exception;
+package com.demo.testmysql2.utility.exception;
 
 import org.springframework.http.HttpStatus;
 

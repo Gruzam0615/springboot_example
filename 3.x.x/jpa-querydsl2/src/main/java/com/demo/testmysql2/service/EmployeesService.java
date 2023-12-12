@@ -232,7 +232,8 @@ public class EmployeesService implements EmployeesRepository {
                     s.salary, s.from_date, s.to_date
             ))
             .from(e)
-            // .leftJoin(e.salaries, s)
+            .leftJoin(e.salaries, s)
+            .on(s.salaries_emp_no.eq(e.emp_no))
             // .on(s.emp_no.eq(e.emp_no))
             .limit(10)
             .fetch();

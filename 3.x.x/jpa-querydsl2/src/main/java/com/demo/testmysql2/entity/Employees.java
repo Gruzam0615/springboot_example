@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 public class Employees {
     
     @Id
+    @Column(name = "emp_no")
     private int emp_no;
     private Date birth_date;
     private String first_name;
@@ -39,12 +40,14 @@ public class Employees {
     @Temporal(TemporalType.DATE)
     private Date hire_date;
 
-    @OneToMany(fetch = FetchType.LAZY) // cascade = {CascadeType.ALL}
-    @JoinColumn(name="titles_emp_no")
+    // @OneToMany(fetch = FetchType.LAZY) // cascade = {CascadeType.ALL}
+    // @JoinColumn(name="titles_emp_no")
+    @OneToMany(mappedBy = "employees")
     private List<Titles> titles;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "salaries_emp_no")
+    // @OneToMany(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "salaries_emp_no")
+    @OneToMany(mappedBy = "employees")
     private List<Salaries> salaries = new ArrayList<>();
 
     
