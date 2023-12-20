@@ -9,6 +9,7 @@ build/
 !**/src/test/**/build/
 application-oauth.yml
 application-ouath.properties
+spring-petclinic
 
 ### STS ###
 .apt_generated
