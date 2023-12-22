@@ -40,6 +40,19 @@ public class BoardService implements BoardRepository {
         return b;
     }
 
+    @Transactional
+    public Board deleteBoard(Long boardIdx) {
+        Board b = getReferenceById(boardIdx);
+        b.setBoardDelete(2);
+        b.setBoardModifiedDate(LocalDateTime.now());
+        return b;
+    }
+
+    @Override
+    public List<Board> customFindAll(int offset, int limit) {
+        return boardRepository.customFindAll(offset, limit);
+    }
+
     @Override
     public List<Board> findAll() {
         // TODO Auto-generated method stub
@@ -50,6 +63,22 @@ public class BoardService implements BoardRepository {
     public List<Board> findAll(Sort sort) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public <S extends Board> List<S> findAll(Example<S> example) {
+        return boardRepository.findAll(example);
+    }
+
+    @Override
+    public <S extends Board> List<S> findAll(Example<S> example, Sort sort) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Page<Board> findAll(Pageable pageable) {
+        return boardRepository.findAll(pageable);
     }
 
     @Override
@@ -117,23 +146,6 @@ public class BoardService implements BoardRepository {
     }
 
     @Override
-    public <S extends Board> List<S> findAll(Example<S> example) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
-
-    @Override
-    public <S extends Board> List<S> findAll(Example<S> example, Sort sort) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
-
-    @Override
-    public Page<Board> findAll(Pageable pageable) {
-        return boardRepository.findAll(pageable);
-    }
-
-    @Override
     public Optional<Board> findById(Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findById'");
@@ -147,8 +159,7 @@ public class BoardService implements BoardRepository {
 
     @Override
     public long count() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
+        return boardRepository.count();
     }
 
     @Override
@@ -195,8 +206,7 @@ public class BoardService implements BoardRepository {
 
     @Override
     public <S extends Board> long count(Example<S> example) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'count'");
+        return boardRepository.count(example);
     }
 
     @Override

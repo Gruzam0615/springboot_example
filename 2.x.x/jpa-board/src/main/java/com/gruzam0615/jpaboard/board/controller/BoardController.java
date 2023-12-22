@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -54,7 +55,7 @@ public class BoardController {
             result.setTimeStamp(LocalDateTime.now());
             return new ResponseEntity<>(result, null, HttpStatus.OK);
         } else {
-            log.info("board 글 작성 실패 글 제목: {}", b.getBoardTitle());
+            log.info("board 글 작성 실패 글 제목: {}", board.getBoardTitle());
             result.setMessage("content create Failure");
             result.setData("/board/create");
             result.setTimeStamp(LocalDateTime.now());
@@ -127,14 +128,29 @@ public class BoardController {
             result.setTimeStamp(LocalDateTime.now());
             return new ResponseEntity<>(result, null, HttpStatus.OK);
         } else {
-            log.info("board 글 수정 실패: {}", b.getBoardTitle());
+            log.info("board 글 수정 실패: {}", board.getBoardTitle());
             result.setMessage("content create Failure");
-            result.setData("/board/view?boardIdx=" + b.getBoardIdx());
+            result.setData("/board/view?boardIdx=" + board.getBoardIdx());
             result.setTimeStamp(LocalDateTime.now());
             return new ResponseEntity<>(result, null, HttpStatus.OK);
         }
     }
-            
     
+    @PatchMapping("/deleteAction")
+    @ResponseBody
+    public ResponseEntity<Object> deleteAction(@RequestParam(value="boardIdxList") List<Long> boardIdxList) {
+        CustomResponseEntity result = new CustomResponseEntity();
+        List<Long> resultData = new ArrayList<>();
+
+        for(int i = 0; i < boardIdxList.size(); i++) {
+            Board b = boardService.deleteBoard(boardIdxList.get(i));
+            resultData.add(b.getBoardIdx());
+        }
+
+        result.setMessage("해당 board 글 삭제");
+        result.setData(resultData);
+        result.setTimeStamp(LocalDateTime.now());
+        return new ResponseEntity<>(result, null, HttpStatus.OK);
+    }    
     
 }
