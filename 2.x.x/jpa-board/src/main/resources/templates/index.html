@@ -37,8 +37,9 @@
                     <th scope="row" th:text="${l.boardIdx}"></th>
                     <td><a th:href="@{/board/view(boardIdx=${l.boardIdx})}" th:text="${l.boardTitle}"></a></td>
                     <td th:text="${l.boardAuthor}"></td>
-                    <td th:text="${l.boardCreatedDate}"></td>
-                    <!-- <td th:text="${#dates.format(l.boardCreatedDate, 'yyyy-MM-dd HH:mm:ss')}"></td> -->
+                    <!-- <td th:text="${l.boardCreatedDate}"></td> -->
+                    <!-- <td th:text="${#dates.format(l.boardCreatedDate, 'yyyy-MM-dd HH:mm')}"></td> --> <!-- Date 타입 형식지정 -->
+                    <td th:text="${#temporals.format(l.boardCreatedDate, 'yyyy-MM-dd HH:mm')}"></td> <!-- LocalDateTime 타입 형식지정-->
                     <td><input class="form-check-input boardSelect" th:value="${l.boardIdx}" type="checkbox" /></td>
                 </tr>
             </tbody>
