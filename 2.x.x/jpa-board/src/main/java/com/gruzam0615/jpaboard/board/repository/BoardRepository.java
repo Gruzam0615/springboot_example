@@ -13,7 +13,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     @Query(
         nativeQuery = true,
-        value = "SELECT * FROM board b WHERE b.boardDelete = 0 OR b.boardDelete = 1 LIMIT ?1, ?2"
+        value = "SELECT * FROM board b WHERE b.boardDelete = 0 OR b.boardDelete = 1 ORDER BY b.boardCreatedDate DESC LIMIT ?1, ?2"
     )
     public List<Board> customFindAll(int offset, int limit);
     

@@ -12,20 +12,33 @@
 <main>
 <h1>신규 글 작성</h1>
 <div class="container">
-    <div class="form-group">
-        <label for="boardTitle">제목</label>
-        <input type="text" class="form-control" id="boardTitle" name="boardTitle" />
+    <div class="row">
+        <div class="col form-group">
+            <label for="boardTitle">제목</label>
+            <input type="text" class="form-control" id="boardTitle" name="boardTitle" />
+        </div>
     </div>
-    <div class="form-group">
-        <label for="boardAuthor">작성자</label>
-        <input type="text" class="form-control" id="boardAuthor" name="boardAuthor" />
+    <div class="row">
+        <div class="col form-group">
+            <label for="boardAuthor">작성자</label>
+            <input type="text" class="form-control" id="boardAuthor" name="boardAuthor" />
+        </div>
     </div>
-    <div class="form-group">
-        <div id="editor" name="boardContent"></div>
-        <div id="viewer"></div>
+    <div class="row">
+        <div class="col form-group">
+            <div id="editor" name="boardContent"></div>
+            <div id="viewer"></div>
+        </div>
     </div>
-    <button type="button" id="cancleAction" class="btn btn-outline-danger">취소</button>
-    <button type="button" id="createAction" class="btn btn-outline-primary">작성</button>
+    
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4 text-end">
+            <button type="button" id="cancleAction" class="btn btn-outline-danger">취소</button>
+            <button type="button" id="createAction" class="btn btn-outline-primary">작성</button>
+        </div>
+    </div>
+
 </div>
 </main>
 <!-- toastui-editor -->
@@ -43,7 +56,7 @@
 <!-- toastui-editor-viewer -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
 <script>
-    const viewer = new Viewer({
+    const viewer = new toastui.Editor({
         el: document.querySelector('#viewer'),
         height: '500px',
         initialValue: ''
