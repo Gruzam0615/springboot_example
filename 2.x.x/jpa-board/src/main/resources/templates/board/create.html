@@ -68,7 +68,7 @@
     actionButton.addEventListener("click", () => {
         const boardTitle = document.getElementById("boardTitle").value;
         const boardAuthor = document.getElementById("boardAuthor").value;
-        const boardContent = editor.getHTML()
+        const boardContent = editor.getHTML();
 
         const url = "/board/createAction";
         const params = JSON.stringify({

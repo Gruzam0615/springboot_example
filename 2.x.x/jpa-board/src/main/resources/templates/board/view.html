@@ -59,7 +59,7 @@
             <div id="viewer2"></div>
         </div>
         <div class="col-2 text-end">
-            <button type="button" id="createAction" class="btn btn-outline-primary">등록</button>
+            <button type="button" id="commentCreate" class="btn btn-outline-primary">등록</button>
         </div>
     </div>
 
@@ -155,7 +155,7 @@
         initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
         previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
         placeholder: '',
-        
+        hideModeSwitch: "true",
     });
 </script>
 <!-- 댓글 뷰어 -->
@@ -169,43 +169,57 @@
 </script>
 
 <!-- 댓글 작성하기 -->
-<script async>
+<script>
+    const boardCommentCreate = document.querySelector("#commentCreate");
     const boardCommentAuthor = document.querySelector("#boardCommentAuthor").value;
-    const boardCommentContent = commentEditor.getHTML();
     const boardIdx = document.getElementById("boardIdx").value;
 
-    const params = JSON.stringify({
-        boardCommentAuthor: boardCommentAuthor,
-        boardCommentContent: boardCommentContent,
-        boardIdx: boardIdx
+    boardCommentCreate.addEventListener("click", () => {
+        const params = JSON.stringify({
+            boardCommentAuthor: boardCommentAuthor,
+            boardCommentContent: commentEditor.getHTML(),
+            boardIdx: parseInt(boardIdx)
+        });
+
+        const createRequestURL = "/boardComment/createBoardComment";
+        const createRequestOptions = {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+            },
+            body: params
+        }
+        // console.log("댓글 본문");
+        // console.log(commentEditor.getHTML());
+        console.log("request parameter:");
+        console.log(createRequestOptions.body);
+
+        try {
+            fetch(createRequestURL, createRequestOptions)
+                .then((res) => res.json())
+                .then((data) => {
+                console.log(data);
+                    if(data === undefined || data.data == false) {
+                        alert("댓글 등록 실패");
+                    }
+                    else {                
+                        alert("댓글 등록 완료");
+                        location.reload(true);
+                    }
+                })
+        }
+        catch(error) {
+            console.error("Error");
+            console.error(error);
+        }
+       
     });
 
-    const createRequestURL = "/boardComment/createBoardComment";
-    const createRequestOptions = {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-        },
-        body: params
-    }
-
-    await fetch(createRequestURL, createRequestOptions)
-    .then((res) => res.json())
-    .then((data) => {
-        console.log(data);
-        if(data !== undefined) {
-            location.reload(true);
-        }
-        else {
-            alert("댓글 등록 실패");
-            location.reload(true);
-        }
-    })
 </script>
 
 <!-- 댓글 불러오기 -->
-<script async>
-    const url = "/boardComment/getBoardComments?boardIdx=";    
+<script>
+    const url = `/boardComment/getBoardComments?boardIdx=${parseInt(boardIdx)}`;    
 
     const commentsList = document.querySelector("#commentsList");
     const noComment = document.createElement("p");
@@ -219,10 +233,10 @@
         },
     }
     window.addEventListener('DOMContentLoaded', () => {
-        fetch(url+boardIdx, options)
+        fetch(url, options)
         .then(res => res.json())
         .then((data) => {
-            if(data.data === null || data === undefined) {
+            if(data === undefined || data.message != "success") {
                 commentsList.appendChild(noComment);
             }
         })

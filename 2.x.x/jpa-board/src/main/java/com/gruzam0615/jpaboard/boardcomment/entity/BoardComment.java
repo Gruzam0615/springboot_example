@@ -13,10 +13,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ColumnDefault;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Table(name = "boardcomment")
 @Entity
+@RequiredArgsConstructor
 public class BoardComment {
     
     @Id
@@ -44,6 +46,12 @@ public class BoardComment {
 
     public BoardComment(int boardCommentDelete) {
         this.boardCommentDelete = boardCommentDelete;
+    }
+
+    public BoardComment(String boardCommentAuthor, String boardCommentContent, Long boardIdx) {
+        this.boardCommentAuthor = boardCommentAuthor;
+        this.boardCommentContent = boardCommentContent;
+        this.boardIdx = boardIdx;
     }
 
 }

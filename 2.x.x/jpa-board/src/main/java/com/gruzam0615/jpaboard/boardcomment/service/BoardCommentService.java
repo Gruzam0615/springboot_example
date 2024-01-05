@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
-import com.gruzam0615.jpaboard.board.entity.Board;
 import com.gruzam0615.jpaboard.boardcomment.entity.BoardComment;
 import com.gruzam0615.jpaboard.boardcomment.repository.BoardCommentRepository;
 
