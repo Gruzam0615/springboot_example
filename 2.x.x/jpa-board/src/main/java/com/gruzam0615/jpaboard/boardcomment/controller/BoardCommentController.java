@@ -67,18 +67,21 @@ public class BoardCommentController {
     
     
     @GetMapping("/getBoardComments")
-    public ResponseEntity<Object> getBoardComments(@RequestParam(name="boardIdx") int boardIdx) {
-
-        int page = 1;
-        int contentsCount = 20;
+    @ResponseBody
+    public ResponseEntity<Object> getBoardComments(
+        @RequestParam(name="boardIdx") int boardIdx, 
+        @RequestParam(name="boardCommentPage", defaultValue = "1") int boardCommentPage
+    ) {
+        int page = boardCommentPage;
+        int contentsCount = 5;
         int pagesCount = 5;
         if(page < 1) { page = 1; }
 
         int currentPage = page - 1;
         Example<BoardComment> boardCommentExample = Example.of(new BoardComment(0));
         long boardCommentTotalCount = boardCommentService.count(boardCommentExample);
-        int offset = currentPage * page;
-        List<BoardComment> list = boardCommentService.customFindAll(offset, contentsCount);
+        int offset = currentPage * pagesCount;
+        List<BoardComment> list = boardCommentService.customFindAll(Long.valueOf(boardIdx), offset, contentsCount);
 
         int totalPage = Long.valueOf(boardCommentTotalCount).intValue() / contentsCount + 1;
 
@@ -127,7 +130,7 @@ public class BoardCommentController {
             .orderBy(bc.boardCommentCreatedDate.asc())
             .fetch();
          
-        log.debug("list: {}", list.toString());
+        // log.debug("list: {}", list.toString());
         // log.debug("list2: {}", list2.toString());
         
         if(list.size() > 0) {
@@ -141,7 +144,7 @@ public class BoardCommentController {
             result.setData(null);
             result.setTimeStamp(LocalDateTime.now());
         }
-        log.debug("result: {}", result.toString());
+        // log.debug("result: {}", result.toString());
 
         return new ResponseEntity<>(result, null, HttpStatus.OK);
     }

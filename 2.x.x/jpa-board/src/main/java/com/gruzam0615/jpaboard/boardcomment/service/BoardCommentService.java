@@ -33,8 +33,8 @@ public class BoardCommentService implements BoardCommentRepository {
     }
 
     @Override
-    public List<BoardComment> customFindAll(int offset, int limit) {
-        return boardCommentRepository.customFindAll(offset, limit);
+    public List<BoardComment> customFindAll(Long boardIdx, int offset, int limit) {
+        return boardCommentRepository.customFindAll(boardIdx, offset, limit);
     }
     
     @Override
