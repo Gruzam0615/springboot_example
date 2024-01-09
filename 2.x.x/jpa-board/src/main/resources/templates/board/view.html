@@ -32,8 +32,7 @@
     </div>   
     <div class="row">
         <div class="col form-group">
-            <div id="editor" name="boardContent" th:utext="${board.boardContent}"></div>
-            <div id="viewer"></div>
+            <div id="editor1" name="boardContent" th:utext="${board.boardContent}"></div>
         </div>
     </div>
     
@@ -45,25 +44,48 @@
         </div>       
     </div>
 
-    <!-- 댓글 입력 부분 -->
-    <!-- <div class="row"> -->
-        <!-- <div class="col form-group"> -->
-            <!-- <label for="boardAuthor">작성자</label> -->
-            <!-- <input type="text" class="form-control" id="comentAuthor" name="comentAuthor" th:value="익명" readonly/> -->
-        <!-- </div> -->
-    <!-- </div> -->
-    <!-- 댓글 목록 부분 -->
-    <!-- <div class="row"> -->
+    <br/>
+    <hr/>
 
-    <!-- </div> -->
+    <!-- 댓글 입력 부분 -->
+    <div class="row">
+        <div class="col-2">
+            <label for="boardCommentAuthor">작성자</label>
+            <input type="text" class="form-control" id="boardCommentAuthor" name="boardComentAuthor" th:value="익명" readonly/>
+        </div>
+        <div class="col-8 from-group">
+            <div id="editor2" class="boardCommentContent" name="boardCommentContent"></div>
+        </div>
+        <div class="col-2 text-end">
+            <button type="button" id="commentCreate" class="btn btn-outline-primary">등록</button>
+        </div>
+    </div>
+
+    <br/>
+    <hr/>
+
+    <!-- 댓글 목록 부분 -->
+    <div class="row" id="commentsList">
+        
+    </div>
+
+    <div class="row">
+        <div class="col text-center" id="CommentsPaginationDiv">
+            <nav aria-label="Page navigation">
+                <ul id="commentsPagination" class="pagination">
+    
+                </ul>
+            </nav>
+        </div>
+    </div>    
     
 </div>
 </main>
-<!-- toastui-editor -->
+<!-- toastui-editor 게시글 부분 -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script>
     const editor = new toastui.Editor({
-        el: document.querySelector('#editor'), // 에디터를 적용할 요소 (컨테이너)
+        el: document.querySelector('#editor1'), // 에디터를 적용할 요소 (컨테이너)
         height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
         initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
         initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
@@ -71,15 +93,7 @@
         placeholder: '',
     });
 </script>
-<!-- toastui-editor-viewer -->
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
-<script>
-    const viewer = new toastui.Editor({
-        el: document.querySelector('#viewer'),
-        height: '500px',
-        initialValue: ''
-    });
-</script>
+
 <!-- 게시글 수정 action method -->
 <script>
     const actionButton = document.getElementById("createAction");
@@ -87,7 +101,7 @@
         const boardIdx = document.getElementById("boardIdx").value;
         const boardTitle = document.getElementById("boardTitle").value;
         const boardAuthor = document.getElementById("boardAuthor").value;
-        const boardContent = editor.getHTML()
+        const boardContent = editor.getHTML();
 
         const url = "/board/updateAction";
         const params = JSON.stringify({
@@ -123,9 +137,214 @@
         }
     })
 
+    // 수정취소 및 뒤로가기
     const cancleButton = document.getElementById("cancleAction");
     cancleButton.addEventListener("click", () => {
         location.href="/";
+    });
+</script>
+
+<!-- 댓글 작성 에디터 -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+    const commentEditor = new toastui.Editor({
+        el: document.querySelector('#editor2'), // 에디터를 적용할 요소 (컨테이너)
+        height: '300px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+        initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+        initialValue: '',                       // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+        previewStyle: 'vertical',               // 마크다운 프리뷰 스타일 (tab || vertical)
+        placeholder: '',
+        hideModeSwitch: "true",
+    });
+</script>
+
+<!-- 댓글 뷰어 -->
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+<!-- <script>
+    const commentEditorViewer = new toastui.Editor({
+        el: document.querySelector('#viewer2'),
+        height: '300px',
+        initialValue: ''
+    });
+</script> -->
+
+<!-- 댓글 작성하기 -->
+<script>
+    const boardCommentCreate = document.querySelector("#commentCreate");
+    const boardCommentAuthor = document.querySelector("#boardCommentAuthor").value;
+    const boardIdx = document.getElementById("boardIdx").value;
+
+    boardCommentCreate.addEventListener("click", () => {
+        const params = JSON.stringify({
+            boardCommentAuthor: boardCommentAuthor,
+            boardCommentContent: commentEditor.getHTML(),
+            boardIdx: parseInt(boardIdx)
+        });
+
+        const createRequestURL = "/boardComment/createBoardComment";
+        const createRequestOptions = {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+            },
+            body: params
+        }
+        // console.log("댓글 본문");
+        // console.log(commentEditor.getHTML());
+        console.log("request parameter:");
+        console.log(createRequestOptions.body);
+
+        try {
+            fetch(createRequestURL, createRequestOptions)
+                .then((res) => res.json())
+                .then((data) => {
+                console.log(data);
+                    if(data === undefined || data.data == false) {
+                        alert("댓글 등록 실패");
+                    }
+                    else {                
+                        alert("댓글 등록 완료");
+                        location.reload(true);
+                    }
+                })
+        }
+        catch(error) {
+            console.error("Error");
+            console.error(error);
+        }
+       
+    });
+
+</script>
+
+<!-- 댓글 불러오기 -->
+<script>
+    // const url = `/boardComment/getBoardComments?boardIdx=${parseInt(boardIdx)}`;
+    // const commentsList = document.querySelector("#commentsList");
+    // let commentsContentList = [];
+
+    // const options = {
+    //     method: "GET",
+    //     headers: { 
+    //         "Content-Type": "application/json",
+    //     },
+    // }
+    const getCommentList = (boardIdx, boardCommentPage) => {
+        const url = `/boardComment/getBoardComments?boardIdx=${parseInt(boardIdx)}&boardCommentPage=${boardCommentPage}`;
+        const commentsList = document.querySelector("#commentsList");
+        let commentsContentList = [];
+            commentsList.innerHTML = "";
+
+        const commentsPagination = document.querySelector("#commentsPagination");
+            commentsPagination.innerHTML = "";
+
+        const options = {
+            method: "GET",
+            headers: { 
+                "Content-Type": "application/json",
+            },
+        };
+        
+        fetch(url, options)
+        .then(res => res.json())
+        .then((data) => {
+            if(data === undefined || data.message != "success") {
+                
+                const noComment = document.createElement("p");
+                    noComment.className = "text-center";
+                    noComment.innerText = "댓글이 없습니다.";
+
+                commentsList.appendChild(noComment);
+            }
+            else {
+                // console.log(data.data.list);
+
+                data.data.list.forEach((element, index) => {
+                    const commentEl = document.createElement("div");
+                        commentEl.className = "row commentsEl";
+                        commentEl.id = index;
+
+                    const commentElIn1 = document.createElement("div");
+                        commentElIn1.className = "col-2 form-group";
+                        commentElIn1.innerText = element.boardCommentAuthor;
+
+                    const commentElIn2 = document.createElement("div");
+                        commentElIn2.className = "col-8 form-group commentContent";
+                        // commentElIn2.innerText = element.boardCommentContent;
+                        commentsContentList.push(element.boardCommentContent);
+                      
+
+                    const commentElIn3 = document.createElement("div");
+                        commentElIn3.className = "col-2 form-group";
+                        const dateData = new Date(element.boardCommentCreatedDate);
+                        const dateText = `${dateData.getFullYear()}.${("0" +dateData.getMonth() + 1).slice(-2)}.${("0" + dateData.getDate()).slice(-2)} ${("0" + dateData.getHours()).slice(-2)}:${("0" + dateData.getMinutes()).slice(-2)}`;
+                        commentElIn3.innerText = dateText;
+
+                    commentEl.append(commentElIn1, commentElIn2, commentElIn3);
+                    commentsList.appendChild(commentEl);
+
+                });
+
+                const commentsEls = document.querySelectorAll(".commentContent");
+                commentsEls.forEach((item, index) => {
+                    const commentViewer = new toastui.Editor({
+                        el: item,
+                        height: '300px',
+                        initialValue: commentsContentList[index],
+                    });
+                })
+                
+                const prevButton = document.createElement("li");
+                const prevA = document.createElement("a");
+                    prevA.className = "page-link";
+                    prevA.innerText = "Previous";
+                
+                if(data.data.boardCommentPage == 1) {
+                    prevButton.className = "page-item disabled";
+                    prevButton.appendChild(prevA);
+                }
+                else {
+                    prevButton.className = "page-item";
+                    prevA.setAttribute("onclick", `getCommentList(${boardIdx}, ${data.data.boardCommentPage - 1})`);
+                    prevButton.appendChild(prevA);
+                }
+                commentsPagination.append(prevButton);
+
+                data.data.boardCommentPagination.forEach((item) => {
+                    const pageItem = document.createElement("li");
+                        pageItem.className = "page-item";
+                    const pageItemA = document.createElement("a");
+                        pageItemA.className = "page-link";
+                        pageItemA.setAttribute("onclick", `getCommentList(${boardIdx}, ${item})`);
+                        pageItemA.innerText = item;
+                    
+                    pageItem.appendChild(pageItemA);
+                    commentsPagination.append(pageItem);
+                });
+
+                const nextButton = document.createElement("li");
+                const nextA = document.createElement("a");
+                    nextA.className = "page-link";
+                    nextA.innerText = "Next";
+
+                if(data.data.boardCommentPage == data.data.boardCommentLastPage) {
+                    nextButton.className = "page-item disabled";
+                    nextButton.appendChild(nextA);
+                }
+                else {
+                    nextButton.className = "page-item";
+                    nextA.setAttribute("onclick", `getCommentList(${boardIdx}, ${data.data.boardCommentPage + 1})`);
+                    nextButton.appendChild(nextA);
+                }
+                commentsPagination.append(nextButton);
+
+                
+            }
+        })
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        getCommentList(boardIdx, 1);
     });
 </script>
 </body>

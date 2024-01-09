@@ -43,7 +43,7 @@ public class MainController {
         int currentPage = page - 1;
         Example<Board> boardExample = Example.of(new Board(0));
         long boardTotalCount = boardService.count(boardExample);
-        int offset = currentPage * 10;
+        int offset = currentPage * pagesCount;
         List<Board> list = boardService.customFindAll(offset, contentsCount);
         // log.debug("list size: {}", list.size());
         // log.debug("board Total Count: {}", boardTotalCount);
@@ -54,12 +54,12 @@ public class MainController {
         if(totalPage > pagesCount) {
             int tempNumber = page / pagesCount;
             if(tempNumber == 0) {
-                for(int i = 0; i < 10; i++) {
+                for(int i = 0; i < pagesCount; i++) {
                     pagination.add(i + 1);
                 }
             }
             else {
-                tempNumber = tempNumber * 10;
+                tempNumber = tempNumber * pagesCount;
                 for(int i = tempNumber; i < tempNumber + pagesCount; i++) {
                     pagination.add(i + 1);
                 }

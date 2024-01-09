@@ -65,7 +65,7 @@ public class BoardController {
     
     @GetMapping("/list")
     public String getBoardList(@RequestParam(name="page", defaultValue="1") int page, Model model) {
-       int contentsCount = 10; // 한 페이지에 보여줄 요소의 개수
+        int contentsCount = 10; // 한 페이지에 보여줄 요소의 개수
         int pagesCount = 10; // 한 번에 보여줄 페이지 개수
         if(page < 1) { page = 1; }
         PageRequest pageRequest = PageRequest.of(page - 1, contentsCount);

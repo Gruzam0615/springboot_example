@@ -1,16 +1,23 @@
 package com.gruzam0615.jpaboard.board.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
+
+import com.gruzam0615.jpaboard.boardcomment.entity.BoardComment;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -46,6 +53,14 @@ public class Board {
     private int boardDelete;
     private LocalDateTime boardCreatedDate;
     private LocalDateTime boardModifiedDate;
+
+    @OneToMany
+    @JoinTable(name = "boardcomment",
+        joinColumns = @JoinColumn(name = "boardIdx")
+    )
+    private List<BoardComment> boardComment = new ArrayList<>();
+
+
 
     @Builder
     public Board(Long boardIdx, String boardTitle, String boardAuthor, String boardContent, int boardDelete, LocalDateTime boardCreatedDate, LocalDateTime boardModifiedDate) {
