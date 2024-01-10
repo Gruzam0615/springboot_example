@@ -1,17 +1,19 @@
 # Springboot Example  
-<p>Springboot 예제 프로젝트 모음</p>  
-<p>예제 프로젝트 목록</p>  
+```
+SpringBoot 실습모음
+```
 
-```
-├── 2.x.x // Springboot 버전 2.x.x
-│   ├── jpa-basic // jpa 예제 프로젝트 
-│   ├── jpa-board // jpa, QueryDSL 예제 프로젝트 - 게시판을 구현
-│   ├── jpa-querydsl // Gradle 패키지를 사용하는 Springboot에 QueryDSL 적용하는 예제 프로젝트
-│   ├── securitybasic // SpringSecurity의 FormLogin을 활용한 로그인 예제 프로젝트
-│   └── securitybasic2 // RestfulAPI 조건에서의 로그인 예제 프로젝트
-│
-├── 3.x.x // Springboot 버전 3.x.x
-    ├── jpa-querydsl2 // Gradle 패키지를 사용하는 Springboot 3.0.0이상의 버전에서 QueryDSL 적용하는 예제 프로젝트
-    ├── securityjwt // JWT를 활용한 로그인 예제 프로젝트
-    └── securityoauth2 // OAuth2를 활용한 SNS 로그인 예제 프로젝트
-```
+<h3>프로젝트 목록</h3>
+<p>Springboot의 버전에 따라 2.x.x, 3.x.x로 디렉터리를 구분 했습니다.</p>
+
+<h4>2.x.x</h4>  
+
+- jpa-board JPA 실습 [ReadMe](./2.x.x/jpa-board/ReadMe.md)  
+- securitybasic SpringSecurity .FormLogin()을 이용한 로그인 실습 (Spring MVC)
+- securitybasic2 SpringSecurity 로그인 실습 (Restful API)  
+
+<h4>3.x.x</h4>
+
+- jpa-querydsl2 Gralde을 사용하는 SpringBoot 3.0.0버전 이후의 QueryDSL세팅 실습  
+- securityjwt JWT를 활용한 로그인 실습  
+- securityoauth2 OAuth2를 활용한 로그인 실습 (SNS를 이용한 로그인)
