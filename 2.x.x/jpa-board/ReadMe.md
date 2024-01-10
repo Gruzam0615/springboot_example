@@ -1,9 +1,9 @@
 # JPA 실습예제  
 
 <pre>
-Springboot 2.x.x 버전(Gradle)에서 QueryDSL 설정과 기초적인 JPA활용이 실습이 목표인 예제입니다.
-기본적인 CRUD 기능을 실습하기 위해 게시판 기능을 구현했습니다.
-게시판과 댓글의 작성 기능에 사용된 텍스트 에디터는 Toast-Ui-Editor를 뢀용했습니다.
+Springboot 2.7.4 버전(Gradle)에서 QueryDSL 사용할 수 있도록 설정하고, Jpa 실습하기 위한 프로젝트입니다.
+기본적인 CRUD 기능을 실습해보기 위해 게시판 기능을 구현했습니다.
+게시판과 댓글의 작성 기능에 사용된 텍스트 에디터 모듈은 NHN Cloud에서 제공하는 <a href="https://ui.toast.com/tui-editor">ToastUi Editor</a>를 사용했습니다.
 </pre>
 
 <h3>기능 목록</h3>
