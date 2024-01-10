@@ -8,7 +8,7 @@ SpringBoot 실습모음
 
 <h4>2.x.x</h4>  
 
-- jpa-board JPA 실습 [ReadMe](./2.x.x/jpa-board/ReadMe.md)  
+- jpa-board JPA 실습 [저장소 바로가기](https://github.com/Gruzam0615/springboot_example/tree/main/2.x.x/jpa-board)
 - securitybasic SpringSecurity .FormLogin()을 이용한 로그인 실습 (Spring MVC)
 - securitybasic2 SpringSecurity 로그인 실습 (Restful API)  
 
